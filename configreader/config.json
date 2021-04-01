@@ -1,0 +1,6 @@
+{
+	"title": "Fisch mit Sauce",
+	"amount_sub_screen": 3,
+	"param1": 300,
+	"param2": ["Text", 1, 2, 3.0]
+}
