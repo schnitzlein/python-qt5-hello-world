@@ -1,0 +1,21 @@
+{
+	"configversion" : "0.1",
+    "main" : [
+      "name" : "",
+      "resolution" : ["x" ,"y"]
+    ],
+	"sub": [
+      {
+      "name": "App1",
+      "Position": 1,
+      "Background": "#FFFFFF",
+      "mode": ""
+      },
+      {
+      "name": "App2",
+      "Position": 2,
+      "Background": "#FF0000",
+      "mode": ""
+      }
+    ]
+}
