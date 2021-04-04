@@ -1,8 +1,10 @@
 {
-	"configversion" : "0.1",
+	"config_version" : "0.1",
     "main" : [
+      {
       "name" : "",
-      "resolution" : ["x" ,"y"]
+      "resolution" : [1024 ,768]
+      }
     ],
 	"sub": [
       {
