@@ -1,11 +1,10 @@
 {
 	"config_version" : "0.1",
-    "main" : [
+    "main" :
       {
-      "name" : "",
+      "name" : "Main Window",
       "resolution" : [1024 ,768]
-      }
-    ],
+      },
 	"sub": [
       {
       "name": "App1",
