@@ -3,7 +3,8 @@
     "main" :
       {
       "name" : "Main Window",
-      "resolution" : [1024 ,768]
+      "resolution" : [1024 ,768],
+      "button" : [10, 50]
       },
 	"sub": [
       {

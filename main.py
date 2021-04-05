@@ -1,8 +1,5 @@
 import sys
-#from PyQt5.QtCore import *
-#from PyQt5.QtGui import *
-#from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication
 from main_window import MainWindow
 from configreader.configreader import ConfigReader
 

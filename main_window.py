@@ -1,5 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
-
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QPushButton
 
 class MainWindow(QMainWindow):
 
@@ -20,10 +23,32 @@ class MainWindow(QMainWindow):
 
     def init_with_config(self, config: dict):
 
+        #Set Title
         title = str(config['name'])
         self.setWindowTitle(title)
 
-        nWidth = config["resolution"][0]
-        nHight = config["resolution"][1]
-        self.setFixedSize(nWidth, nHight)
+        #Set Resolution
+        window_width = config["resolution"][0]
+        window_height = config["resolution"][1]
+        self.setFixedSize(window_width, window_height)
+
+        button_width = config["button"][0]
+        button_height = config["button"][1]
+
+        layout = QHBoxLayout()
+        button_left = QPushButton("<")
+        button_left.setFixedSize(button_width * window_width/100, button_height * window_height/100)
+        button_right = QPushButton(">")
+        button_right.setFixedSize(button_width * window_width / 100, button_height * window_height / 100)
+
+        central_widget = QWidget()
+        layout.addWidget(button_left)
+        layout.addWidget(central_widget)
+        layout.addWidget(button_right)
+        main_widget = QWidget()
+        main_widget.setLayout(layout)
+
+        self.setCentralWidget(main_widget)
+
+
 
