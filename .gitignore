@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# IDE
+.idea
+
+# Qt install sources
+PyQt5-5.15.4*
+sip-4.19.25*
