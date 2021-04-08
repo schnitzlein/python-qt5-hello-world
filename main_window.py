@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtGui import QColor
+from PyQt5.QtCore import Qt
 
 class MainWindow(QMainWindow):
 
@@ -10,30 +12,50 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         self.setWindowTitle("")
+        self.screens_config = []
+        self.current_screen = 0
+        
 
-        # label = QLabel("This is a PyQt5 window!")
-        #
-        # # The `Qt` namespace has a lot of attributes to customise
-        # # widgets. See: http://doc.qt.io/qt-5/qt.html
-        # label.setAlignment(Qt.AlignCenter)
-        #
-        # # Set the central widget of the Window. Widget will expand
-        # # to take up all the space in the window by default.
-        # self.setCentralWidget(label)
+    def say_hello(self):                                                                                     
+        print("Button clicked, Hello!")
+
+    def change_widget(self, widget: QWidget, direction: str):
+        max_screen = len( self.screens_config )
+        if direction == ">":
+            self.current_screen = (self.current_screen + 1) % max_screen
+        elif direction == "<":
+            self.current_screen = (self.current_screen - 1) % max_screen
+        else:
+            print("that not a valid direction")
+        #for items in self.screens_config['sub']:
+        #    print(items)
+        b = self.screens_config['sub'][self.current_screen]["Background"]
+        p = widget.palette()
+        p.setColor(widget.backgroundRole(), Qt.red)
+        widget.setPalette(p)
 
     def init_with_config(self, config: dict):
+        self.screens_config = config
 
+        # TODO: put in delegation or inheritance
         #Set Title
-        title = str(config['name'])
-        self.setWindowTitle(title)
-
-        #Set Resolution
-        window_width = config["resolution"][0]
-        window_height = config["resolution"][1]
+        if 'name' not in config:
+            title = str(config['main']['name'])
+            self.setWindowTitle(title)
+            #Set Resolution
+            window_width = config['main']["resolution"][0]
+            window_height = config['main']["resolution"][1]
+            button_width = config['main']["button"][0]
+            button_height = config['main']["button"][1]
+        else:
+            title = str(config['name'])
+            self.setWindowTitle(title)
+            #Set Resolution
+            window_width = config["resolution"][0]
+            window_height = config["resolution"][1]
+            button_width = config["button"][0]
+            button_height = config["button"][1]
         self.setFixedSize(window_width, window_height)
-
-        button_width = config["button"][0]
-        button_height = config["button"][1]
 
         layout = QHBoxLayout()
         button_left = QPushButton("<")
@@ -48,7 +70,10 @@ class MainWindow(QMainWindow):
         main_widget = QWidget()
         main_widget.setLayout(layout)
 
+        self.setAutoFillBackground(True)
         self.setCentralWidget(main_widget)
 
-
+        # signals
+        button_left.clicked.connect(self.say_hello)
+        button_right.clicked.connect(self.change_widget(central_widget, ">"))
 

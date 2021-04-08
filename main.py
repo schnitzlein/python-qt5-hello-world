@@ -3,24 +3,18 @@ from PyQt5.QtWidgets import QApplication
 from main_window import MainWindow
 from configreader.configreader import ConfigReader
 
-# def window():
-#    app = QApplication(sys.argv)
-#    w = QWidget()
-#    b = QLabel(w)
-#    b.setText("Hello World!")
-#    w.setGeometry(100,100,200,50)
-#    b.move(50,20)
-#    w.setWindowTitle("PyQt5")
-#    w.show()
-#    sys.exit(app.exec_())
+
+   
+
 if __name__ == '__main__':
 
    app = QApplication(sys.argv)
 
    reader = ConfigReader()
+   main_config_dict = reader.read_config("./configreader/main_config.json")
    mainconfig = reader.get_part_from_config("./configreader/main_config.json", "main")
    window = MainWindow()
-   window.init_with_config(mainconfig)
+   window.init_with_config(main_config_dict)
    window.show()
 
    app.exec_()
