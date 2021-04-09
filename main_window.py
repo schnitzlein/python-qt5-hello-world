@@ -14,13 +14,14 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("")
         self.screens_config = []
         self.current_screen = 0
-        
 
-    def say_hello(self):                                                                                     
+
+    def say_hello(self):
         print("Button clicked, Hello!")
 
     def change_widget(self, widget: QWidget, direction: str):
-        max_screen = len( self.screens_config )
+        #print("len: " + str(len(self.screens_config["sub"])))
+        max_screen = len(self.screens_config["sub"])
         if direction == ">":
             self.current_screen = (self.current_screen + 1) % max_screen
         elif direction == "<":
@@ -29,10 +30,13 @@ class MainWindow(QMainWindow):
             print("that not a valid direction")
         #for items in self.screens_config['sub']:
         #    print(items)
-        b = self.screens_config['sub'][self.current_screen]["Background"]
-        p = widget.palette()
-        p.setColor(widget.backgroundRole(), Qt.red)
-        widget.setPalette(p)
+        b = QColor(self.screens_config['sub'][self.current_screen]["Background"])
+        #print(self.screens_config['sub'][self.current_screen]["Background"])
+        p = self.central_widget.palette()
+        p.setColor(self.central_widget.backgroundRole(), b)
+        self.central_widget.setPalette(p)
+        self.central_widget.setAutoFillBackground(True)
+
 
     def init_with_config(self, config: dict):
         self.screens_config = config
@@ -63,17 +67,25 @@ class MainWindow(QMainWindow):
         button_right = QPushButton(">")
         button_right.setFixedSize(button_width * window_width / 100, button_height * window_height / 100)
 
-        central_widget = QWidget()
+        self.central_widget = QWidget()
         layout.addWidget(button_left)
-        layout.addWidget(central_widget)
+        layout.addWidget(self.central_widget)
         layout.addWidget(button_right)
         main_widget = QWidget()
         main_widget.setLayout(layout)
 
-        self.setAutoFillBackground(True)
+        # b = QColor(self.screens_config['sub'][1]["Background"])
+        # print(self.screens_config['sub'][1]["Background"])
+        # p = self.central_widget.palette()
+        # p.setColor(self.central_widget.backgroundRole(), b)
+        # self.central_widget.setPalette(p)
+        # self.central_widget.setAutoFillBackground(True)
+        # self.setAutoFillBackground(True)
+
         self.setCentralWidget(main_widget)
 
         # signals
-        button_left.clicked.connect(self.say_hello)
-        button_right.clicked.connect(self.change_widget(central_widget, ">"))
+        button_left.clicked.connect(lambda: self.change_widget(self.central_widget, "<"))
+        #print(type(central_widget))
+        button_right.clicked.connect(lambda: self.change_widget(self.central_widget, ">"))
 

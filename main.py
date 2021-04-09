@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
    reader = ConfigReader()
    main_config_dict = reader.read_config("./configreader/main_config.json")
-   mainconfig = reader.get_part_from_config("./configreader/main_config.json", "main")
+   #mainconfig = reader.get_part_from_config("./configreader/main_config.json", "main")
    window = MainWindow()
    window.init_with_config(main_config_dict)
    window.show()

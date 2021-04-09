@@ -10,7 +10,7 @@
       {
       "name": "App1",
       "Position": 1,
-      "Background": "#FFFFFF",
+      "Background": "#F0FF0F",
       "mode": ""
       },
       {
@@ -18,6 +18,19 @@
       "Position": 2,
       "Background": "#FF0000",
       "mode": ""
+      },
+            {
+      "name": "App2",
+      "Position": 3,
+      "Background": "#00FF00",
+      "mode": ""
+      },
+            {
+      "name": "App2",
+      "Position": 4,
+      "Background": "#0000FF",
+      "mode": ""
       }
+
     ]
 }
