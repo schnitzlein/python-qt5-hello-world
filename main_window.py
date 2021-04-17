@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
+from subscreens.clock import Clock
 
 class MainWindow(QMainWindow):
 
@@ -67,12 +68,15 @@ class MainWindow(QMainWindow):
         button_right = QPushButton(">")
         button_right.setFixedSize(button_width * window_width / 100, button_height * window_height / 100)
 
-        self.central_widget = QWidget()
+        #self.central_widget = QWidget()
+        self.central_widget = Clock()
         layout.addWidget(button_left)
         layout.addWidget(self.central_widget)
         layout.addWidget(button_right)
+
         main_widget = QWidget()
         main_widget.setLayout(layout)
+
 
         # b = QColor(self.screens_config['sub'][1]["Background"])
         # print(self.screens_config['sub'][1]["Background"])
