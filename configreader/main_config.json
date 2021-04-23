@@ -4,11 +4,12 @@
       {
       "name" : "Main Window",
       "resolution" : [1024 ,768],
-      "button" : [10, 50]
+      "button-size" : [10, 10],
+      "number-of-subs" : 7
       },
 	"sub": [
       {
-      "name": "App1",
+      "name": "Clock",
       "Position": 1,
       "Background": "#F0FF0F",
       "mode": ""
@@ -20,14 +21,32 @@
       "mode": ""
       },
             {
-      "name": "App2",
+      "name": "App3",
       "Position": 3,
       "Background": "#00FF00",
       "mode": ""
       },
             {
-      "name": "App2",
+      "name": "App4",
       "Position": 4,
+      "Background": "#0000FF",
+      "mode": ""
+      },
+            {
+      "name": "App5",
+      "Position": 5,
+      "Background": "#0000FF",
+      "mode": ""
+      },
+            {
+      "name": "App6",
+      "Position": 6,
+      "Background": "#0000FF",
+      "mode": ""
+      },
+            {
+      "name": "App7",
+      "Position": 7,
       "Background": "#0000FF",
       "mode": ""
       }
