@@ -10,6 +10,8 @@ class Clock(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.name = "Clock"
+
         self.f = QFont("LCARSGTJ3", 80, QFont.Bold)
         self.fsmall = QFont("LCARSGTJ3", 40, QFont.Bold)
         self.lblTimeTxt = QtWidgets.QLabel()
@@ -33,13 +35,14 @@ class Clock(QWidget):
         self.symbol2.setFont(self.f)
 
         layout = QGridLayout()
-        # hbox = QHBoxLayout()
-        # hbox.addWidget(self.symbol)
-        # hbox.addStretch()
+        hbox = QHBoxLayout()
+        hbox.addStretch()
+        hbox.addWidget(self.symbol)
+        hbox.addStretch()
         # hbox.addWidget(self.symbol2)
-        # layout.addLayout(hbox, 0, 1)
-        layout.addWidget(self.lblTimeTxt, 1, 2, 2, 2)
-        layout.addWidget(self.lblDateTxt, 2, 2, 2, 1)
+        layout.addLayout(hbox, 0, 1)
+        layout.addWidget(self.lblTimeTxt, 1, 1)
+        layout.addWidget(self.lblDateTxt, 2, 1)
 
 
         self.setLayout(layout)
@@ -50,3 +53,6 @@ class Clock(QWidget):
 
     def getTime(self) -> QTime:
         return QTime.currentTime()
+
+    def getName(self) -> str:
+        return self.name

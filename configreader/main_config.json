@@ -4,8 +4,7 @@
       {
       "name" : "Main Window",
       "resolution" : [1024 ,768],
-      "button-size" : [20, 10],
-      "number-of-subs" : 7
+      "button-size" : [20, 10]
       },
 	"sub": [
       {
