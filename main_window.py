@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
 from subscreens.clock import Clock
-from gui.button import Button
+from gui import *
 
 class MainWindow(QMainWindow):
 
@@ -89,11 +89,11 @@ class MainWindow(QMainWindow):
             button_color = self.screens_config['sub'][i]["Background"]
             self.button[i] = QPushButton(self.screens_config["sub"][i]["name"])
             self.button[i].setFixedSize(button_width, button_height)
-            path_button = Button.build_svg(
-                Button(button_width, button_height, button_color, background_color, self.screens_config["sub"][i]["name"] + "_button"))
+            path_button = Render.build_svg(
+                Button_full(button_width, button_height, background_color, self.screens_config["sub"][i]["name"] + "_button"))
             self.button[i].setStyleSheet("background-image: url(" + path_button + ");"
                                                                              "border:1px;"
-                                                                             "background-color:" + background_color + ";")
+                                                                             "background-color:" + button_color + ";")
             vbox.addWidget(self.button[i])
 
         vbox.addWidget(button_down)

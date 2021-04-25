@@ -31,16 +31,14 @@ class Header_right(Render):
             w=self.width,
             rectw=rectW,
             r=r,
-            f=self.fill,
             cx=cx,
             twidth= textwidth,
             rectx = rectX,
             backg=self.background)
 
-    def __init__(self, width, height, fill, background, file_name):
+    def __init__(self, width, height, background, file_name):
         super().__init__(file_name)
         self.width = width
         self.height = height
-        self.fill = fill
         self.background = background
         self.file_name = file_name

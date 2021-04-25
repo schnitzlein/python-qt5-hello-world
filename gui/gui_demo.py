@@ -29,7 +29,7 @@ if __name__ == '__main__':
     button_full_width = 100
     button_full_height = int(button_full_width / 3)
     button_full_path = Render.build_svg(
-        Button_full(button_full_width, button_full_height, "", "#111111", "button_full"))
+        Button_full(button_full_width, button_full_height, "#111111", "button_full"))
     button_full = QPushButton("#FFFF99")
     button_full.setStyleSheet("QPushButton {"
                                   "font-size: 10pt;"
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     button_left_width = 100
     button_left_height = int(button_left_width / 3)
     button_left_path = Render.build_svg(
-        Button_semi_left(button_left_width, button_left_height, "", "#111111", "button_left"))
+        Button_semi_left(button_left_width, button_left_height, "#111111", "button_left"))
     button_left = QPushButton("#FFFF99")
     button_left.setStyleSheet("QPushButton {"
                               "font-size: 10pt;"
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     button_right_width = 100
     button_right_height = int(button_right_width / 3)
     button_right_path = Render.build_svg(
-        Button_semi_right(button_right_width, button_right_height, "", "#111111", "button_right"))
+        Button_semi_right(button_right_width, button_right_height, "#111111", "button_right"))
     button_right = QPushButton("#FFFF99")
     button_right.setStyleSheet("QPushButton {"
                               "font-size: 10pt;"
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     header_left_width = 600
     header_left_heigth = 30
     header_left_path = Render.build_svg(
-        Header_left(header_left_width, header_left_heigth, "", "#111111", "header_left"))
+        Header_left(header_left_width, header_left_heigth, "#111111", "header_left"))
     header_left = QPushButton("")
     header_left.setStyleSheet("QPushButton {"
                                "font-size: 10pt;"
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     header_right_width = 600
     header_right_heigth = 30
     header_right_path = Render.build_svg(
-        Header_right(header_right_width, header_right_heigth, "", "#111111", "header_right"))
+        Header_right(header_right_width, header_right_heigth, "#111111", "header_right"))
     header_right = QPushButton("")
     header_right.setStyleSheet("QPushButton {"
                               "font-size: 10pt;"
