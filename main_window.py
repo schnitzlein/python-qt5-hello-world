@@ -1,12 +1,14 @@
 from PyQt5.QtWidgets import QWidget, QStackedWidget
-from PyQt5.QtWidgets import QHBoxLayout, QGridLayout, QVBoxLayout
+from PyQt5.QtWidgets import QHBoxLayout, QGridLayout, QVBoxLayout, QListWidget, QListWidgetItem, QLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QColor
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from subscreens.clock import Clock
-from gui import *
+from gui.button_full import Button_full
+from gui.header_right import Header_right
+
 from subscreens.placeholder import Placeholder
 
 class MainWindow(QMainWindow):
@@ -25,6 +27,13 @@ class MainWindow(QMainWindow):
 
     def say_hello(self):
         print("Button clicked, Hello!")
+
+    def set_central_widget2(self, widget: QWidget):
+        source_button = self.sender()
+        print("set_central_widget2 WidgetName:  " + widget.getName())
+        index = self.central_widget.widget(widget)
+        self.central_widget.setCurrentIndex(index)
+
 
     def set_central_widget(self):
         source_button = self.sender()
@@ -79,27 +88,61 @@ class MainWindow(QMainWindow):
             self.number_of_subs = len(self.screens_config["sub"])
         self.setFixedSize(window_width, window_height)
 
-        vbox = QVBoxLayout()
+        main_widget = QWidget()
+        main_widget.setLayout(self.main_layout)
+        vbox_menu = QVBoxLayout()
+        vbox_menu.setSizeConstraint(QLayout.SetFixedSize)
 
         hbox_titel = QHBoxLayout()
-        hbox_titel.addStretch()
-        hbox_titel.addWidget(QLabel(title))
+        #hbox_titel.addStretch()
+        system_color = "#ffd966"
+
+        header_right_width = 800
+        header_right_heigth = 30
+        header_right_path = Header_right.build_svg(
+            Header_right(header_right_width, header_right_heigth, "#F0F0F0", "header_right"))
+        header_right = QPushButton(title)
+        header_right.setStyleSheet("QPushButton {"
+                                  "font-size: 10pt;"
+                                  "font-family: Oswald;"
+                                  "background-image : url(" + header_right_path + ");"
+                                                                                 "border:1px;"
+                                                                                 "background-color:"+ system_color + ";}"
+                                                                                 "QPushButton::hover {background-color: #99CCFF;}")
+        header_right.setFixedSize(header_right_width, header_right_heigth)
+        hbox_titel.addWidget(header_right)
+        #hbox_titel.addWidget(QLabel(title))
 
         self.main_layout.addLayout(hbox_titel, 0, 1)
-        self.main_layout.addLayout(vbox, 1, 0)
+        self.main_layout.addLayout(vbox_menu, 1, 0)
 
+        button_stylesheet = "background-color:" + system_color +"; border-width: 2px; border-radius: 36px; bordericolor: black; font: bold 14px; min-width: 10em; padding: 6px;"
         button_up = QPushButton("\u1403")
         button_up.setFixedSize(button_width * window_width/100, button_height * window_height/100)
+        button_up.setStyleSheet(button_stylesheet)
+
         button_down = QPushButton("\u1401")
         button_down.setFixedSize(button_width * window_width / 100, button_height * window_height / 100)
+        button_down.setStyleSheet(button_stylesheet)
 
-        #self.central_widget = QWidget()
+        button_ListWidget = QListWidget()
+        button_ListWidget.setStyleSheet( """QListWidget{background: #f2eeed;  border: 1px solid #f2eeed;}""")
         # Erstellen der rechten Button-Leiste ##############
-        vbox.addWidget(button_up)
+        vbox_menu.addWidget(button_up)
         button_width = button_width * window_width / 100
         button_height = button_height * window_height / 100
         background_color = "#f2eeed"
+        button_size = QSize()
+        button_size.setWidth(button_width)
+        button_size.setHeight(button_height)
         for i in range(0, self.number_of_subs):
+            subbutton_list_item = QListWidgetItem(button_ListWidget)
+            placeholder_listItem = QListWidgetItem(button_ListWidget)
+            placeholder_listItem.setSizeHint(QSize(button_width, 2))
+
+            flag = placeholder_listItem.flags() & Qt.ItemIsUserCheckable
+            placeholder_listItem.setFlags(flag)
+            #subbutton_listItem.setBackground(QColor("#f2eeed"))
             # Widgets ##################################################################################################
             if i == 0:
                 self.central_widget.insertWidget(i, Clock())
@@ -108,26 +151,41 @@ class MainWindow(QMainWindow):
             # Buttons ##################################################################################################
             button_color = self.screens_config['sub'][i]["Background"]
             self.button[i] = QPushButton(self.screens_config["sub"][i]["name"], self)
-            self.button[i].setFixedSize(button_width, button_height)
+            self.button[i].setFixedSize(button_size)
 
-            path_button = Button.build_svg(
-                Button(button_width, button_height, button_color, background_color,
-                       self.screens_config["sub"][i]["Background"] + "_button"))
+            #Button with stylsheet
+            #self.button[i].setStyleSheet("background-color:" +button_color +"; border-width: 2px; border-radius: 10px; bordericolor: black; font: bold 14px; min-width: 10em; padding: 6px;")
+
+            path_button = Button_full.build_svg(
+               Button_full(button_width, button_height, background_color,
+                            self.screens_config["sub"][i]["Background"] + "_button"))
             self.button[i].setStyleSheet("background-image: url(" + path_button + ");"
-                                                                                  "border:1px;"
-                                                                                  "background-color:"
-                                         + background_color + ";")
-            print("Button: " + self.button[i].text() + "Screen: " + self.central_widget.widget(i).getName())
+                                         "border:1px; background-color:" + button_color + ";")
+            #print("Button: " + self.button[i].text() + "Screen: " + self.central_widget.widget(i).getName())
             # signals ##################################################################################################
-            self.button[i].clicked.connect(lambda: self.set_central_widget())
-            vbox.addWidget(self.button[i])
+            #self.button[i].clicked.connect(lambda widget=self.central_widget.widget(i): self.set_central_widget2(self, widget))
+            self.button[i].clicked.connect(lambda widget=self.central_widget.widget(i): self.set_central_widget())
+            subbutton_list_item.setSizeHint(self.button[i].size())
+            #print(self.button[i].size())
+            #
+            button_ListWidget.addItem(placeholder_listItem)
+            button_ListWidget.addItem(subbutton_list_item)
+            button_ListWidget.setItemWidget(subbutton_list_item, self.button[i])
+            #vbox_menu.addWidget(self.button[i])
 
-        vbox.addWidget(button_down)
+        vbox_menu.addWidget(button_ListWidget)
+        vbox_menu.addWidget(button_down)
+        #downbutton_listItem = QListWidgetItem(button_ListWidget)
+        #downbutton_listItem.setSizeHint(button_down.size())
+        #button_ListWidget.addItem(downbutton_listItem)
+        #button_ListWidget.setItemWidget(downbutton_listItem, button_down)
+        button_ListWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        button_ListWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        button_ListWidget.setMaximumWidth(button_ListWidget.sizeHintForColumn(0))
+
         #############################################
         self.central_widget.setCurrentIndex(1)
         self.main_layout.addWidget(self.central_widget, 1, 1)
-        main_widget = QWidget()
-        main_widget.setLayout(self.main_layout)
 
         self.setCentralWidget(main_widget)
 

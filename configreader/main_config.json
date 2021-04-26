@@ -48,6 +48,24 @@
       "Position": 7,
       "Background": "#ffba26",
       "mode": ""
+      },
+            {
+      "name": "App8",
+      "Position": 8,
+      "Background": "#ffba26",
+      "mode": ""
+      },
+            {
+      "name": "App9",
+      "Position": 9,
+      "Background": "#ffba26",
+      "mode": ""
+      },
+            {
+      "name": "App10",
+      "Position": 10,
+      "Background": "#ffba26",
+      "mode": ""
       }
 
     ]
