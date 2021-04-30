@@ -8,9 +8,9 @@ class Render():
     image_folder = "gui_elements"
 
     def save_img(self, svg, size):
-        path = os.path.join(self.image_folder, self.sub_folder)
+        path = os.path.join(self.image_folder, self.sub_folder).replace("\\", "/")
         filename = str(hash(self.file_name)) + ".png"  # TODO use reproducible hash for filename
-        url = os.path.join(path, filename)
+        url = os.path.join(path, filename).replace("\\", "/")
         if not os.path.isfile(url):
             if not os.path.isdir(path):
                 os.makedirs(path)
