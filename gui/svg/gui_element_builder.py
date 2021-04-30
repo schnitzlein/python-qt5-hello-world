@@ -1,10 +1,10 @@
 from PyQt5.QtSvg import QSvgWidget
 from enum import Enum
 from PyQt5.QtCore import QSize
-import os
+import os, sys
 
-strDirectory = "\\gui\\svg\\"
-
+strWinDirectory = "\\gui\\svg\\"
+strLinuxDirectory = "/gui/svg/"
 
 class Gui_Element(Enum):
     NONE = 0
@@ -47,10 +47,20 @@ class GuiElementsBuilder:
 
         filename = self.case[element.value]
         cwd = os.getcwd()
-        file_all = cwd + strDirectory + filename
+        directory = ""
+        if sys.platform == 'win32':
+            directory = strWinDirectory
+        else:
+            directory = strLinuxDirectory
+
+        print(sys.platform)
+
+        file_all = cwd + directory + filename
         # print("filename: " + cwd + strDirectory + filename)
         file = open(file_all, "r")
         data = file.read()
+        strbackground = "{fill:" + '#ff9900;}'
+        data = data.format(background=strbackground)
         file.close()
 
         svg_bytes = bytearray(data, encoding='utf-8')
