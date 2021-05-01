@@ -30,14 +30,17 @@ class GuiElementsBuilder:
     def file_bottom_left() -> str:
         return "elbow_left_bottom.svg"
 
-    def file_bottom_full_circle() -> str:
+    def file_button_full_circle() -> str:
         return "button_full_circle.svg"
 
-    def file_bottom_semi_left() -> str:
+    def file_button_semi_left() -> str:
         return "button_semi_left.svg"
 
-    def file_bottom_semi_right() -> str:
+    def file_button_semi_right() -> str:
         return "button_semi_right.svg"
+
+    def file_button_notification_full_circle() -> str:
+        return "button_notification_full_circle.svg"
 
     case = {Gui_Element.NONE: file_none(),
             Gui_Element.END_LEFT: file_end_left(),
@@ -45,9 +48,10 @@ class GuiElementsBuilder:
             Gui_Element.TOP_LEFT: file_top_left(),
             Gui_Element.BOTTOM_LEFT: file_bottom_left(),
             Gui_Element.BUTTON: file_button(),
-            Gui_Element.BUTTON_FULL_CIRCLE: file_bottom_full_circle(),
-            Gui_Element.BUTTON_SEMI_LEFT: file_bottom_semi_left(),
-            Gui_Element.BUTTON_SEMI_RIGHT: file_bottom_semi_right()
+            Gui_Element.BUTTON_FULL_CIRCLE: file_button_full_circle(),
+            Gui_Element.BUTTON_SEMI_LEFT: file_button_semi_left(),
+            Gui_Element.BUTTON_SEMI_RIGHT: file_button_semi_right(),
+            Gui_Element.BUTTON_NOTIFICATION_FULL_CIRCLE: file_button_notification_full_circle()
             }
 
     def get_full_file_path(self, element: Gui_Element) -> str:
@@ -70,14 +74,15 @@ class GuiElementsBuilder:
 
         return data
 
-    def interpolate_svg(self, svg: str, fill: str) -> str:
+    def interpolate_svg(self, svg: str, fill: str, text: str) -> str:
         fill = "{fill:" + fill + ";}"
-        return svg.format(background=fill)
+        return svg.format(background=fill,
+                          filltext=text)
 
-    def get_svg_widget(self, element: Gui_Element, height: int, width: int, fill="#FF9933") -> QSvgWidget:
+    def get_svg_widget(self, element: Gui_Element, height: int, width: int, fill="#FF9933", text="00") -> QSvgWidget:
 
         svg = self.read_svg_from_file(element)
-        svg = self.interpolate_svg(svg, fill)
+        svg = self.interpolate_svg(svg, fill, text)
 
         svg_bytes = bytearray(svg, encoding='utf-8')
         svg_widget = QSvgWidget()

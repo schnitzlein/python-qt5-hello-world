@@ -67,10 +67,21 @@ if __name__ == '__main__':
     button_right.setFixedSize(button_width, button_height)
     button_right.setStyleSheet(buttonStyle)
 
+    button_notification = QPushButton("")
+    button_layout = QHBoxLayout()
+    button_layout.addWidget(
+        gui_element_builder.get_svg_widget(Gui_Element.BUTTON_NOTIFICATION_FULL_CIRCLE, 200, 600,"#FF99CC","12"))
+    button_layout.setContentsMargins(0, 0, 0, 0)
+    button_notification.setLayout(button_layout)
+
+    button_notification.setFixedSize(600, 200)
+    button_notification.setStyleSheet(buttonStyle)
+
     grid = QVBoxLayout()
     grid.addWidget(button)
     grid.addWidget(button_left)
     grid.addWidget(button_right)
+    grid.addWidget(button_notification)
 
     window.central_widget = QWidget()
     main_widget = QWidget()
