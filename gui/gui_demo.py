@@ -2,10 +2,11 @@ import random
 import sys
 
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QHBoxLayout,QVBoxLayout
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QVBoxLayout
+
 from gui import *
 
 windowHeight = 600
@@ -22,86 +23,65 @@ def change_background(window: QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
+    gui_element_builder = GuiElementsBuilder()
+
     window = QMainWindow()
     window.setStyleSheet("QMainWindow {background: " + background_color + ";}")
     window.setFixedSize(windowWidth, windowHeight)
 
-    button_full_width = 100
-    button_full_height = int(button_full_width / 3)
-    button_full_path = Render.build_svg(
-        Button_full(button_full_width, button_full_height, "#111111", "button_full"))
-    button_full = QPushButton("#FFFF99")
-    button_full.setStyleSheet("QPushButton {"
-                                  "font-size: 10pt;"
-                                  "font-family: Oswald;"
-                                  "background-image : url(" + button_full_path + ");"
-                                                                                     "border:1px;"
-                                                                                     "background-color:#CCDDFF;}"
-                                                                                     "QPushButton::hover {background-color: #99CCFF;}")
-    button_full.setFixedSize(button_full_width, button_full_height)
+    buttonStyle = ("QPushButton {"
+                   "border:1px;"
+                   "background-color:#111111;}"
+                   "QPushButton::hover {background-color: #99CCFF;}")
 
-    button_left_width = 100
-    button_left_height = int(button_left_width / 3)
-    button_left_path = Render.build_svg(
-        Button_semi_left(button_left_width, button_left_height, "#111111", "button_left"))
-    button_left = QPushButton("#FFFF99")
-    button_left.setStyleSheet("QPushButton {"
-                              "font-size: 10pt;"
-                              "font-family: Oswald;"
-                              "background-image : url(" + button_left_path + ");"
-                                                                             "border:1px;"
-                                                                             "background-color:#CCDDFF;}"
-                                                                             "QPushButton::hover {background-color: #99CCFF;}")
-    button_left.setFixedSize(button_left_width, button_left_height)
+    button_width = 100
+    button_height = int(button_width / 3)
 
-    button_right_width = 100
-    button_right_height = int(button_right_width / 3)
-    button_right_path = Render.build_svg(
-        Button_semi_right(button_right_width, button_right_height, "#111111", "button_right"))
-    button_right = QPushButton("#FFFF99")
-    button_right.setStyleSheet("QPushButton {"
-                              "font-size: 10pt;"
-                              "font-family: Oswald;"
-                              "background-image : url(" + button_right_path + ");"
-                                                                             "border:1px;"
-                                                                             "background-color:#CCDDFF;}"
-                                                                             "QPushButton::hover {background-color: #99CCFF;}")
-    button_right.setFixedSize(button_right_width, button_right_height)
+    button = QPushButton("")
+    button_layout = QHBoxLayout()
+    button_layout.addWidget(
+        gui_element_builder.get_svg_widget(Gui_Element.BUTTON_FULL_CIRCLE, button_height, button_width))
+    button_layout.setContentsMargins(0, 0, 0, 0)
+    button.setLayout(button_layout)
 
-    header_left_width = 600
-    header_left_heigth = 30
-    header_left_path = Render.build_svg(
-        Header_left(header_left_width, header_left_heigth, "#111111", "header_left"))
-    header_left = QPushButton("")
-    header_left.setStyleSheet("QPushButton {"
-                               "font-size: 10pt;"
-                               "font-family: Oswald;"
-                               "background-image : url(" + header_left_path + ");"
-                                                                               "border:1px;"
-                                                                               "background-color:#CCDDFF;}"
-                                                                               "QPushButton::hover {background-color: #99CCFF;}")
-    header_left.setFixedSize(header_left_width, header_left_heigth)
+    button.setFixedSize(button_width, button_height)
+    button.setStyleSheet(buttonStyle)
 
-    header_right_width = 600
-    header_right_heigth = 30
-    header_right_path = Render.build_svg(
-        Header_right(header_right_width, header_right_heigth, "#111111", "header_right"))
-    header_right = QPushButton("")
-    header_right.setStyleSheet("QPushButton {"
-                              "font-size: 10pt;"
-                              "font-family: Oswald;"
-                              "background-image : url(" + header_right_path + ");"
-                                                                             "border:1px;"
-                                                                             "background-color:#CCDDFF;}"
-                                                                             "QPushButton::hover {background-color: #99CCFF;}")
-    header_right.setFixedSize(header_right_width, header_right_heigth)
+    button_left = QPushButton("")
+    button_layout = QHBoxLayout()
+    button_layout.addWidget(
+        gui_element_builder.get_svg_widget(Gui_Element.BUTTON_SEMI_LEFT, button_height, button_width))
+    button_layout.setContentsMargins(0, 0, 0, 0)
+    button_left.setLayout(button_layout)
+
+    button_left.setFixedSize(button_width, button_height)
+    button_left.setStyleSheet(buttonStyle)
+
+    button_right = QPushButton("")
+    button_layout = QHBoxLayout()
+    button_layout.addWidget(
+        gui_element_builder.get_svg_widget(Gui_Element.BUTTON_SEMI_RIGHT, button_height, button_width))
+    button_layout.setContentsMargins(0, 0, 0, 0)
+    button_right.setLayout(button_layout)
+
+    button_right.setFixedSize(button_width, button_height)
+    button_right.setStyleSheet(buttonStyle)
+
+    button_notification = QPushButton("")
+    button_layout = QHBoxLayout()
+    button_layout.addWidget(
+        gui_element_builder.get_svg_widget(Gui_Element.BUTTON_NOTIFICATION_FULL_CIRCLE, 200, 600,"#FF99CC","12"))
+    button_layout.setContentsMargins(0, 0, 0, 0)
+    button_notification.setLayout(button_layout)
+
+    button_notification.setFixedSize(600, 200)
+    button_notification.setStyleSheet(buttonStyle)
 
     grid = QVBoxLayout()
-    grid.addWidget(button_full)
+    grid.addWidget(button)
     grid.addWidget(button_left)
     grid.addWidget(button_right)
-    grid.addWidget(header_left)
-    grid.addWidget(header_right)
+    grid.addWidget(button_notification)
 
     window.central_widget = QWidget()
     main_widget = QWidget()
@@ -109,7 +89,6 @@ if __name__ == '__main__':
 
     window.setCentralWidget(main_widget)
 
-    button_full.clicked.connect(lambda: change_background(window))
-
+    button_left.clicked.connect(lambda: change_background(window))
     window.show()
     app.exec_()
