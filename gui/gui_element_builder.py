@@ -6,11 +6,14 @@ from PyQt5.QtSvg import QSvgWidget
 
 from .gui_element import Gui_Element
 
-strWinDirectory = "\\gui\\svg\\"
-strLinuxDirectory = "/gui/svg/"
+strWinDirectory = "gui\\svg\\"
+strLinuxDirectory = "gui/svg/"
 
 
 class GuiElementsBuilder:
+
+    def __init__(self):
+        self.strfont = "sans-serif"
 
     def file_none() -> str:
         return ""  # ToDo add svg-symbol for no file
@@ -60,14 +63,13 @@ class GuiElementsBuilder:
 
     def get_full_file_path(self, element: Gui_Element) -> str:
         filename = self.case[element]
-        cwd = os.getcwd()
 
         if sys.platform == 'win32':
             directory = strWinDirectory
         else:
             directory = strLinuxDirectory
 
-        return cwd + directory + filename
+        return directory + filename
 
     def read_svg_from_file(self, element: Gui_Element) -> str:
 
@@ -80,10 +82,11 @@ class GuiElementsBuilder:
 
     def interpolate_svg(self, svg: str, fill: str, text: str) -> str:
         fill = "{fill:" + fill + ";}"
-        return svg.format(background=fill,
-                          filltext=text)
+        return svg.format(background=fill, # ToDo
+                          filltext=text, font=self.strfont)
 
-    def get_svg_widget(self, element: Gui_Element, height: int, width: int, fill="#FF9933", text="00") -> QSvgWidget:
+    def get_svg_widget(self, element: Gui_Element, height: int, width: int, fill: str = "#FF9933",
+                       text: str = "00") -> QSvgWidget:
 
         svg = self.read_svg_from_file(element)
         svg = self.interpolate_svg(svg, fill, text)
@@ -98,3 +101,6 @@ class GuiElementsBuilder:
             svg_widget.setFixedSize(svg_widget.renderer().defaultSize())
 
         return svg_widget
+
+    def set_font(self, font: str):
+        self.strfont = font
