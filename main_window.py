@@ -150,10 +150,10 @@ class MainWindow(QMainWindow):
             button_layout = QVBoxLayout()
             button_layout.addWidget(
                 self.gui_element_builder.get_svg_widget(
-                    Gui_Element.BUTTON_FULL_CIRCLE,
+                    Gui_Element.BUTTON_FULL_CIRCLE_TEXT,
                     button_height,
                     button_width,
-                    button_color))
+                    button_color, self.screens_config["sub"][i]["name"]))
             button_layout.setContentsMargins(0, 0, 0, 0)
             self.button[i].setLayout(button_layout)
             self.button[i].setStyleSheet("border:1px;")

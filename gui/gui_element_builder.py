@@ -42,6 +42,9 @@ class GuiElementsBuilder:
     def file_button_notification_full_circle() -> str:
         return "button_notification_full_circle.svg"
 
+    def file_button_full_circle_text() -> str:
+        return "button_full_circle_text.svg"
+
     case = {Gui_Element.NONE: file_none(),
             Gui_Element.END_LEFT: file_end_left(),
             Gui_Element.END_RIGHT: file_end_right(),
@@ -51,7 +54,8 @@ class GuiElementsBuilder:
             Gui_Element.BUTTON_FULL_CIRCLE: file_button_full_circle(),
             Gui_Element.BUTTON_SEMI_LEFT: file_button_semi_left(),
             Gui_Element.BUTTON_SEMI_RIGHT: file_button_semi_right(),
-            Gui_Element.BUTTON_NOTIFICATION_FULL_CIRCLE: file_button_notification_full_circle()
+            Gui_Element.BUTTON_NOTIFICATION_FULL_CIRCLE: file_button_notification_full_circle(),
+            Gui_Element.BUTTON_FULL_CIRCLE_TEXT: file_button_full_circle_text()
             }
 
     def get_full_file_path(self, element: Gui_Element) -> str:
