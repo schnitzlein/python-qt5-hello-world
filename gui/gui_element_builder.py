@@ -13,7 +13,7 @@ strLinuxDirectory = "gui/svg/"
 class GuiElementsBuilder:
 
     def __init__(self):
-        self.strfont = "sans-serif"
+        self.font_name = "sans-serif"
 
     def file_none() -> str:
         return ""  # ToDo add svg-symbol for no file
@@ -83,7 +83,7 @@ class GuiElementsBuilder:
     def interpolate_svg(self, svg: str, fill: str, text: str) -> str:
         fill = "{fill:" + fill + ";}"
         return svg.format(background=fill, # ToDo
-                          filltext=text, font=self.strfont)
+                          filltext=text, font=self.font_name)
 
     def get_svg_widget(self, element: Gui_Element, height: int, width: int, fill: str = "#FF9933",
                        text: str = "00") -> QSvgWidget:
@@ -103,4 +103,4 @@ class GuiElementsBuilder:
         return svg_widget
 
     def set_font(self, font: str):
-        self.strfont = font
+        self.font_name = font

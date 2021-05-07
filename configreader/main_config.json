@@ -4,11 +4,11 @@
     "name": "Main Window",
     "resolution": [
       1024,
-      768
+      600
     ],
     "button-size": [
       15,
-      8
+      10
     ],
     "front_color": "#ffd966",
     "background_color": "#050505",
