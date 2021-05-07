@@ -132,10 +132,10 @@ class MainWindow(QMainWindow):
             placeholder_list_item.setFlags(flag)
             # Widgets ##################################################################################################
             if i == 0:
-                self.central_widget.insertWidget(i, Clock(front_color))
-                # self.central_widget.setStyleSheet("background-color:" + "#ffffff") # Show size of Central_Widget
+                self.central_widget.insertWidget(i, Clock(self.screens_config['sub'][i]["Background"]))
+                #self.central_widget.setStyleSheet("background-color:" + "#ffffff") # Show size of Central_Widget
             else:
-                self.central_widget.insertWidget(i, Placeholder(self.screens_config["sub"][i]["name"], front_color))
+                self.central_widget.insertWidget(i, Placeholder(self.screens_config["sub"][i]["name"], self.screens_config['sub'][i]["Background"]))
 
             # Buttons ##################################################################################################
             button_color = self.screens_config['sub'][i]["Background"]
