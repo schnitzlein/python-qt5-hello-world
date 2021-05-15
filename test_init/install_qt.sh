@@ -28,3 +28,7 @@ sudo make install
 
 cd ..
 rm -r PyQt5-5.15.4*
+
+
+# dependency for pyqt5 svg
+sudo apt-get install python3-pyqt5.qtsvg -y
