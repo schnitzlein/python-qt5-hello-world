@@ -8,6 +8,7 @@ from PyQt5.QtGui import QFont
 
 from gui import *
 from subscreens.clock import Clock
+from subscreens.countup import Countup
 from subscreens.placeholder import Placeholder
 from PyQt5.QtCore import Qt, QRect
 
@@ -134,6 +135,8 @@ class MainWindow(QMainWindow):
             if i == 0:
                 self.central_widget.insertWidget(i, Clock(self.screens_config['sub'][i]["Background"]))
                 #self.central_widget.setStyleSheet("background-color:" + "#ffffff") # Show size of Central_Widget
+            elif i == 1:
+                self.central_widget.insertWidget(i, Countup(self.screens_config['sub'][i]["Background"]))
             else:
                 self.central_widget.insertWidget(i, Placeholder(self.screens_config["sub"][i]["name"], self.screens_config['sub'][i]["Background"]))
 
@@ -167,5 +170,5 @@ class MainWindow(QMainWindow):
         button_list_widget.setMaximumWidth(button_list_widget.sizeHintForColumn(0))
 
         #############################################
-        self.central_widget.setCurrentIndex(1)
+        self.central_widget.setCurrentIndex(2)
         self.setCentralWidget(self.main_widget)
