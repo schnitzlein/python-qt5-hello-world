@@ -1,36 +1,79 @@
 {
-	"config_version" : "0.1",
-    "main" :
-      {
-      "name" : "Main Window",
-      "resolution" : [1024 ,768],
-      "button" : [10, 50]
-      },
-	"sub": [
-      {
-      "name": "App1",
+  "config_version": "0.1",
+  "main": {
+    "name": "Main Window",
+    "resolution": [
+      1024,
+      600
+    ],
+    "button-size": [
+      15,
+      10
+    ],
+    "front_color": "#ffd966",
+    "background_color": "#050505",
+    "font": "LCARSGTJ3"
+  },
+  "sub": [
+    {
+      "name": "Clock",
       "Position": 1,
-      "Background": "#F0FF0F",
+      "Background": "#ffba26",
       "mode": ""
-      },
-      {
+    },
+    {
       "name": "App2",
       "Position": 2,
-      "Background": "#FF0000",
+      "Background": "#c1ff05",
       "mode": ""
-      },
-            {
-      "name": "App2",
+    },
+    {
+      "name": "App3",
       "Position": 3,
-      "Background": "#00FF00",
+      "Background": "#cc2d2d",
       "mode": ""
-      },
-            {
-      "name": "App2",
+    },
+    {
+      "name": "App4",
       "Position": 4,
-      "Background": "#0000FF",
+      "Background": "#309fff",
       "mode": ""
-      }
-
-    ]
+    },
+    {
+      "name": "App5",
+      "Position": 5,
+      "Background": "#c1ff05",
+      "mode": ""
+    },
+    {
+      "name": "App6",
+      "Position": 6,
+      "Background": "#ffba26",
+      "mode": ""
+    },
+    {
+      "name": "App7",
+      "Position": 7,
+      "Background": "#ffba26",
+      "mode": ""
+    },
+    {
+      "name": "App8",
+      "Position": 8,
+      "Background": "#ffba26",
+      "mode": ""
+    },
+    {
+      "name": "App9",
+      "Position": 9,
+      "Background": "#ffba26",
+      "mode": ""
+    },
+    {
+      "name": "App10",
+      "Position": 10,
+      "Background": "#ffba26",
+      "mode": ""
+    }
+  ]
 }

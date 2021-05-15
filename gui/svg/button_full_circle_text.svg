@@ -1,0 +1,13 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+    <defs>
+        <style>.cls-1{background}</style>
+    </defs>
+        <title>button_full_circle</title>
+        <g id="button_full_circle" data-name="button_full_circle">
+           <circle class="cls-1" r="50" cy="50" cx="50"/>
+           <rect class="cls-1" height="100" width="200" x="50" y="0"/>
+           <circle class="cls-1" r="50" cy="50" cx="250"/>
+            <!--  ToDo Fill ass variable-->
+           <text font-family="{font}" font-size="50" id="svg_4" y="90" x="150" fill="#050505">{filltext}</text>
+       </g>
+</svg>
