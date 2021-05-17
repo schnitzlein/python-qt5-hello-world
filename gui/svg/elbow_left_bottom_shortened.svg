@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 187 90"
+   version="1.1"
+   sodipodi:docname="elbow_left_bottom_shortened.svg"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   width="187"
+   height="90">
+  <metadata
+     id="metadata857">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>elbow_left_bottom</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview855"
+     showgrid="false"
+     inkscape:zoom="3.7733333"
+     inkscape:cx="154.87775"
+     inkscape:cy="45"
+     inkscape:window-x="-8"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs848">
+    <style
+       id="style846">.cls-1{background}</style>
+  </defs>
+  <title
+     id="title850">elbow_left_bottom</title>
+  <path
+     class="cls-1"
+     d="M 150.03074,90 H 75.015371 C 33.586882,90 0,56.61 0,15.41 V 0 h 150.03074 v 22.87 c 0.0715,20.621369 16.8824,37.262954 37.50769,37.13 v 0 l -0.10946,30 z"
+     id="path852"
+     style="stroke-width:1.0001"
+     sodipodi:nodetypes="cssccccccc" />
+</svg>
