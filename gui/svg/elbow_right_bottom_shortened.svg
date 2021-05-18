@@ -11,7 +11,7 @@
    data-name="Layer 1"
    viewBox="0 0 187 90"
    version="1.1"
-   sodipodi:docname="elbow_left_bottom_shortened.svg"
+   sodipodi:docname="elbow_right_bottom_shortened.svg"
    inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
    width="187"
    height="90">
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>elbow_left_bottom_shortened</dc:title>
+        <dc:title>elbow_right_bottom_shortened</dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,7 +41,7 @@
      id="namedview855"
      showgrid="false"
      inkscape:zoom="3.7733333"
-     inkscape:cx="154.87775"
+     inkscape:cx="71.186533"
      inkscape:cy="45"
      inkscape:window-x="-8"
      inkscape:window-y="32"
@@ -54,10 +54,10 @@
        id="style846">.cls-1{background}</style>
   </defs>
   <title
-     id="title850">elbow_left_bottom_shortened</title>
+     id="title850">elbow_right_bottom_shortened</title>
   <path
      class="cls-1"
-     d="M 150.03074,90 H 75.015371 C 33.586882,90 0,56.61 0,15.41 V 0 h 150.03074 v 22.87 c 0.0715,20.621369 16.8824,37.262954 37.50769,37.13 v 0 l -0.10946,30 z"
+     d="m 37.50769,90 h 75.01537 c 41.42849,0 75.01537,-33.39 75.01537,-74.59 V 0 H 37.50769 V 22.87 C 37.43619,43.491369 20.62529,60.132954 0,60 v 0 l 0.10946,30 z"
      id="path852"
      style="stroke-width:1.0001"
      sodipodi:nodetypes="cssccccccc" />

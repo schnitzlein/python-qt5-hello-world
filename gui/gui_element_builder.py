@@ -27,6 +27,18 @@ class GuiElementsBuilder:
     def file_end_right() -> str:
         return "endcap_right.svg"
 
+    def file_top_right_short() -> str:
+        return "elbow_right_top_shortened.svg"
+
+    def file_top_right() -> str:
+        return "elbow_right_top.svg"
+
+    def file_bottom_right_short() -> str:
+        return "elbow_right_bottom_shortened.svg"
+
+    def file_bottom_right() -> str:
+        return "elbow_right_bottom.svg"
+
     def file_top_left_short() -> str:
         return "elbow_left_top_shortened.svg"
 
@@ -66,7 +78,11 @@ class GuiElementsBuilder:
             Gui_Element.BUTTON_SEMI_LEFT: file_button_semi_left(),
             Gui_Element.BUTTON_SEMI_RIGHT: file_button_semi_right(),
             Gui_Element.BUTTON_NOTIFICATION_FULL_CIRCLE: file_button_notification_full_circle(),
-            Gui_Element.BUTTON_FULL_CIRCLE_TEXT: file_button_full_circle_text()
+            Gui_Element.BUTTON_FULL_CIRCLE_TEXT: file_button_full_circle_text(),
+            Gui_Element.TOP_RIGHT: file_top_right(),
+            Gui_Element.TOP_RIGHT_SHORT: file_top_right_short(),
+            Gui_Element.BOTTOM_RIGHT: file_bottom_right(),
+            Gui_Element.BOTTOM_RIGHT_SHORT: file_bottom_right_short()
             }
 
     def get_full_file_path(self, element: Gui_Element) -> str:
