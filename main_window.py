@@ -82,24 +82,26 @@ class MainWindow(QMainWindow):
         vbox_menu = QVBoxLayout()
         vbox_menu.setSizeConstraint(QLayout.SetFixedSize)
 
-        # Header
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.TOP_LEFT, 0, 0, front_color),
-                                   0, 0, 1, 1)
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 590, front_color),
-                                   0, 1, Qt.AlignTop)
+        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.TOP_LEFT_SHORT, 0, 0, front_color))
+        button_list_widget = QListWidget()
+        vbox_menu.addWidget(button_list_widget)
+        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT_SHORT, 0, 0, front_color))
+        # Header #################################################################
+
+        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 702, front_color),
+                                   0, 1,1,1, Qt.AlignTop)
         self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 53, front_color),
                                    0, 3, Qt.AlignTop)
         self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.END_RIGHT, 0, 0, front_color),
                                    0, 4, Qt.AlignTop)
+        # Header - END ###########################################################
 
         # Menu
-        self.main_layout.addLayout(vbox_menu, 2, 0, 1, 1)
+        self.main_layout.addLayout(vbox_menu, 0, 0, 4, 1)
         # Central Window
-        self.main_layout.addWidget(self.central_widget, 1, 1, 2, -1)
-        # Footer
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT, 0, 0, front_color),
-                                   3, 0)
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 590, front_color),
+        self.main_layout.addWidget(self.central_widget, 1, 1, 2, 4)
+        # Footer #################################################################
+        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 702, front_color),
                                    3, 1, Qt.AlignBottom)
         # Add Exit Button
         exit_button = QPushButton("EXIT")
@@ -108,18 +110,17 @@ class MainWindow(QMainWindow):
         exit_button.setStyleSheet("background:#ff0000; border:1px solid " + front_color + ";")
         exit_button.clicked.connect(lambda: self.close())
 
-        self.main_layout.addWidget(exit_button,
-                                   3, 3, Qt.AlignBottom)
+        self.main_layout.addWidget(exit_button, 3, 3, Qt.AlignBottom)
         self.main_layout.addWidget(
             self.gui_element_builder.get_svg_widget(Gui_Element.END_RIGHT, 0, 0, front_color, font),
             3, 4, Qt.AlignBottom)
+        # Footer - END ###########################################################
 
-        button_list_widget = QListWidget()
         # button_ListWidget.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerItem)
         button_list_widget.setStyleSheet(
             "QListWidget{background:" + background_color + ";  border: 0px solid " + front_color + ";}")
 
-        # Erstellen der rechten Button-Leiste ##############
+        # Erstellen der linken Button-Leiste ##############
         button_width = button_width * window_width / 100
         button_height = button_height * window_height / 100
         button_size = QSize(button_width, button_height)
@@ -163,7 +164,7 @@ class MainWindow(QMainWindow):
             # signals ##################################################################################################
             self.button[i].clicked.connect(lambda widget=self.central_widget.widget(i): self.set_central_widget())
 
-        vbox_menu.addWidget(button_list_widget)
+
         button_list_widget.setMaximumWidth(1000)
         button_list_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         button_list_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
