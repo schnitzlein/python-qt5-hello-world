@@ -19,3 +19,4 @@ class Gui_Element(Enum):
     TOP_RIGHT_SHORT = 14
     BOTTOM_RIGHT = 15
     BOTTOM_RIGHT_SHORT = 16
+    BUTTON_TEXT = 17

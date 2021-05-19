@@ -66,6 +66,9 @@ class GuiElementsBuilder:
     def file_button_full_circle_text() -> str:
         return "button_full_circle_text.svg"
 
+    def file_button_text() -> str:
+        return "button_text.svg"
+
     case = {Gui_Element.NONE: file_none(),
             Gui_Element.END_LEFT: file_end_left(),
             Gui_Element.END_RIGHT: file_end_right(),
@@ -82,7 +85,8 @@ class GuiElementsBuilder:
             Gui_Element.TOP_RIGHT: file_top_right(),
             Gui_Element.TOP_RIGHT_SHORT: file_top_right_short(),
             Gui_Element.BOTTOM_RIGHT: file_bottom_right(),
-            Gui_Element.BOTTOM_RIGHT_SHORT: file_bottom_right_short()
+            Gui_Element.BOTTOM_RIGHT_SHORT: file_bottom_right_short(),
+            Gui_Element.BUTTON_TEXT: file_button_text()
             }
 
     def get_full_file_path(self, element: Gui_Element) -> str:
