@@ -7,6 +7,7 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 
 from gui import *
+from gui.gui_button_builder import GuiButtonBuilder
 from subscreens.clock import Clock
 from subscreens.countup import Countup
 from subscreens.placeholder import Placeholder
@@ -28,6 +29,7 @@ class MainWindow(QMainWindow):
         self.main_widget = QWidget()
         self.main_layout = QGridLayout()
         self.gui_element_builder = GuiElementsBuilder()
+        self.gui_button_builder = GuiButtonBuilder()
         self.resolution = resolution
 
     def set_central_widget2(self, widget: QWidget):
@@ -82,17 +84,17 @@ class MainWindow(QMainWindow):
         vbox_menu = QVBoxLayout()
         vbox_menu.setSizeConstraint(QLayout.SetFixedSize)
 
-        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.TOP_LEFT_SHORT, 0, 0, front_color))
+        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.TOP_LEFT_SHORT, 100, 191, front_color))
         button_list_widget = QListWidget()
         vbox_menu.addWidget(button_list_widget)
-        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT_SHORT, 0, 0, front_color))
+        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT_SHORT, 100, 191, front_color))
         # Header #################################################################
 
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 702, front_color),
-                                   0, 1,1,1, Qt.AlignTop)
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 53, front_color),
+        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 712, front_color),
+                                   0, 1, 1, 1, Qt.AlignTop)
+        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 52, front_color),
                                    0, 3, Qt.AlignTop)
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.END_RIGHT, 0, 0, front_color),
+        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.END_RIGHT, 33, 33, front_color),
                                    0, 4, Qt.AlignTop)
         # Header - END ###########################################################
 
@@ -101,18 +103,18 @@ class MainWindow(QMainWindow):
         # Central Window
         self.main_layout.addWidget(self.central_widget, 1, 1, 2, 4)
         # Footer #################################################################
-        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 30, 702, front_color),
+        self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 712, front_color),
                                    3, 1, Qt.AlignBottom)
         # Add Exit Button
         exit_button = QPushButton("EXIT")
         exit_button.setFont(QFont(font, 20, QFont.Bold))
-        exit_button.setFixedSize(52, 30)
+        exit_button.setFixedSize(52, 33)
         exit_button.setStyleSheet("background:#ff0000; border:1px solid " + front_color + ";")
         exit_button.clicked.connect(lambda: self.close())
 
         self.main_layout.addWidget(exit_button, 3, 3, Qt.AlignBottom)
         self.main_layout.addWidget(
-            self.gui_element_builder.get_svg_widget(Gui_Element.END_RIGHT, 0, 0, front_color, font),
+            self.gui_element_builder.get_svg_widget(Gui_Element.END_RIGHT, 33, 33, front_color, font),
             3, 4, Qt.AlignBottom)
         # Footer - END ###########################################################
 
@@ -142,20 +144,9 @@ class MainWindow(QMainWindow):
                 self.central_widget.insertWidget(i, Placeholder(self.screens_config["sub"][i]["name"], self.screens_config['sub'][i]["Background"]))
 
             # Buttons ##################################################################################################
-            button_color = self.screens_config['sub'][i]["Background"]
-            self.button[i] = QPushButton(self.screens_config["sub"][i]["name"], self)
-            self.button[i].setFixedSize(button_size)
-
-            button_layout = QVBoxLayout()
-            button_layout.addWidget(
-                self.gui_element_builder.get_svg_widget(
-                    Gui_Element.BUTTON_FULL_CIRCLE_TEXT,
-                    button_height,
-                    button_width,
-                    button_color, self.screens_config["sub"][i]["name"]))
-            button_layout.setContentsMargins(0, 0, 0, 0)
-            self.button[i].setLayout(button_layout)
-            self.button[i].setStyleSheet("border:1px;")
+            self.gui_button_builder.set_color(self.screens_config['sub'][i]["Background"])
+            self.gui_button_builder.set_size(button_height, button_width)
+            self.button[i] = self.gui_button_builder.create_button(self.screens_config["sub"][i]["name"], Gui_Element.BUTTON_TEXT)
 
             sub_button_list_item.setSizeHint(button_size)
             button_list_widget.addItem(placeholder_list_item)
@@ -165,11 +156,11 @@ class MainWindow(QMainWindow):
             self.button[i].clicked.connect(lambda widget=self.central_widget.widget(i): self.set_central_widget())
 
 
-        button_list_widget.setMaximumWidth(1000)
+        #button_list_widget.setMaximumWidth(1000)
         button_list_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         button_list_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         button_list_widget.setMaximumWidth(button_list_widget.sizeHintForColumn(0))
 
         #############################################
-        self.central_widget.setCurrentIndex(2)
+        self.central_widget.setCurrentIndex(0)
         self.setCentralWidget(self.main_widget)

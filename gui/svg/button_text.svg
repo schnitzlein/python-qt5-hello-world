@@ -2,9 +2,9 @@
     <defs>
         <style>.cls-1{background}</style>
     </defs>
-        <title>button_1</title>
+        <title>button_text</title>
         <g id="Button_Text" >
             <rect class="cls-1" width="150" height="60"/>
-            <text class="cls-1" font-family="{font}" font-size="50" id="svg_4" y="90" x="100" fill="#050505">{filltext}</text>
+            <text font-family="{font}" font-size="30" id="svg_4" y="50" x="70" fill="#050505">{filltext}</text>
         </g>
 </svg>
