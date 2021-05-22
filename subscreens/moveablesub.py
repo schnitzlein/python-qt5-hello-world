@@ -15,7 +15,6 @@ class Movesub(Base):
         self.center()
         self.oldPos = self.pos()  
 
-        # TODO: child class
         self.symbol = QLabel(self.name)
         self.symbol.setFont(self.font)
         self.symbol.setStyleSheet("QLabel { color : " + self.foreground_color + "; }, QButton { color: "+ self.foreground_color + "; }")
