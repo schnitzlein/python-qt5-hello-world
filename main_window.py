@@ -11,6 +11,8 @@ from gui.gui_button_builder import GuiButtonBuilder
 from subscreens.clock import Clock
 from subscreens.countup import Countup
 from subscreens.placeholder import Placeholder
+from subscreens.moveablesub import Movesub
+from experiments.myevent import MyCustomEventTest, MyEvent
 from PyQt5.QtCore import Qt, QRect
 
 
@@ -140,6 +142,10 @@ class MainWindow(QMainWindow):
                 #self.central_widget.setStyleSheet("background-color:" + "#ffffff") # Show size of Central_Widget
             elif i == 1:
                 self.central_widget.insertWidget(i, Countup(self.screens_config['sub'][i]["Background"]))
+            elif i == 3:
+                self.central_widget.insertWidget(i, Movesub(name=self.screens_config["sub"][i]["name"], foreground_color=self.screens_config['sub'][i]["Background"]))
+            elif i == 4:
+                self.central_widget.insertWidget(i, MyCustomEventTest(name=self.screens_config["sub"][i]["name"], foreground_color=self.screens_config['sub'][i]["Background"]))
             else:
                 self.central_widget.insertWidget(i, Placeholder(self.screens_config["sub"][i]["name"], self.screens_config['sub'][i]["Background"]))
 

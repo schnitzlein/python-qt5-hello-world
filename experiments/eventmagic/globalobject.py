@@ -14,6 +14,7 @@ class GlobalObject(QtCore.QObject):
             self._events[name].append(func)
 
     def dispatchEvent(self, name):
+        #print(self._events)
         functions = self._events.get(name, [])
         for func in functions:
             QtCore.QTimer.singleShot(0, func)
