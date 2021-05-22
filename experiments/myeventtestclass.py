@@ -17,7 +17,16 @@ class Myeventtest(QMainWindow):
             self.font = QFont("LCARSGTJ3", 80, QFont.Bold)
         self.foreground_color = foreground_color
 
-        uic.loadUi("test.ui", self)
+        self.ui = uic.loadUi("test.ui", self)
+
+        # Find the button with the name "printButton"
+        self.button = self.findChild(QtWidgets.QPushButton, 'printButton')
+        self.button.clicked.connect(self.printButtonPressed)
+        # Find the InputField with the name "input"
+        self.input = self.findChild(QtWidgets.QLineEdit, 'input')
+
+        self.buttonClear = self.findChild(QtWidgets.QPushButton, 'clearButton')
+        self.buttonClear.clicked.connect(self.printButtonClearPressed)
 
         self.pressing = False
         self.start = QPoint(0, 0)
@@ -42,6 +51,22 @@ class Myeventtest(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+    
+    def printButtonPressed(self):
+        # This is executed when the button is pressed
+        if self.input.text() == "":
+            print('Input text: ' + self.input.property("placeholderText"))
+        else:
+            print('Input text: ' + self.input.text())
+    
+    def printButtonClearPressed(self):
+        # This is executed when the button is pressed
+        if self.input.text() == "":
+            pass
+        else:
+            self.input.setText("foobar")      # indirect through QLineEdit setText function
+            self.ui.input.setText("barfoo")   # direct through self.ui file
+            #self.input.setProperty("placeholderText", "some text 123")
 
 
 if __name__ == '__main__':
