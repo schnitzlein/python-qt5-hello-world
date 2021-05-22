@@ -1,3 +1,4 @@
+from PyQt5 import QtCore
 from PyQt5.QtCore import QCoreApplication, QEvent
 from PyQt5.QtWidgets import QGridLayout, QLabel, QPushButton
 from subscreens.baseclass import Base
@@ -24,11 +25,12 @@ class MyEvent(QEvent):
     
     def get_name(self) -> str:
         return self.name
-    
-    # TODO: override spontaneous()
 
 
 class MyCustomEventTest(Base):
+
+    # Signal an Event to other Classes (Widgets)
+    #keyPressed_signal = QtCore.pyqtSignal(QtCore.QEvent)
 
     def __init__(self, name: str, foreground_color="#ffffff", font_name=""):
         super().__init__(name, foreground_color, font_name)
@@ -82,5 +84,18 @@ class MyCustomEventTest(Base):
         else:
             self.label.setText("Unknown Event")
     
-    # TODO: use event filters to override and do custom action, see: https://doc.qt.io/qtforpython/overviews/eventsandfilters.html#event-types
 
+
+    def leaveEvent(self, e):
+        self.label.setText("Custom Event Experiment")
+    
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Q:
+            print("key Q was pressed")
+        elif event.key() == QtCore.Qt.Key_Enter:
+            self.proceed()
+        event.accept()
+
+    def proceed(self):
+        print("key Enter was pressed")
+    
