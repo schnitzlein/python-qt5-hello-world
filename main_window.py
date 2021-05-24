@@ -8,6 +8,7 @@ from PyQt5.QtGui import QFont
 
 from gui import *
 from gui.gui_button_builder import GuiButtonBuilder
+from gui.gui_subscreen_builder import GuiSubscreenBuilder
 from subscreens.clock import Clock
 from subscreens.countup import Countup
 from subscreens.placeholder import Placeholder
@@ -32,6 +33,7 @@ class MainWindow(QMainWindow):
         self.main_layout = QGridLayout()
         self.gui_element_builder = GuiElementsBuilder()
         self.gui_button_builder = GuiButtonBuilder()
+        self.gui_subscreen_builder = GuiSubscreenBuilder()
         self.resolution = resolution
 
     def set_central_widget2(self, widget: QWidget):
@@ -120,7 +122,7 @@ class MainWindow(QMainWindow):
             3, 4, Qt.AlignBottom)
         # Footer - END ###########################################################
 
-        # button_ListWidget.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerItem)
+        # button_ListWidget.setVerticalScrolllayout(QAbstractItemView.ScrollMode.ScrollPerItem)
         button_list_widget.setStyleSheet(
             "QListWidget{background:" + background_color + ";  border: 0px solid " + front_color + ";}")
 
@@ -137,17 +139,7 @@ class MainWindow(QMainWindow):
             flag = placeholder_list_item.flags() & Qt.ItemIsUserCheckable
             placeholder_list_item.setFlags(flag)
             # Widgets ##################################################################################################
-            if i == 0:
-                self.central_widget.insertWidget(i, Clock(self.screens_config['sub'][i]["Background"]))
-                #self.central_widget.setStyleSheet("background-color:" + "#ffffff") # Show size of Central_Widget
-            elif i == 1:
-                self.central_widget.insertWidget(i, Countup(self.screens_config['sub'][i]["Background"]))
-            elif i == 3:
-                self.central_widget.insertWidget(i, Movesub(name=self.screens_config["sub"][i]["name"], foreground_color=self.screens_config['sub'][i]["Background"]))
-            elif i == 4:
-                self.central_widget.insertWidget(i, MyCustomEventTest(name=self.screens_config["sub"][i]["name"], foreground_color=self.screens_config['sub'][i]["Background"]))
-            else:
-                self.central_widget.insertWidget(i, Placeholder(self.screens_config["sub"][i]["name"], self.screens_config['sub'][i]["Background"]))
+            self.central_widget.insertWidget(i, self.gui_subscreen_builder.inti_with_config(self.screens_config['sub'][i]))
 
             # Buttons ##################################################################################################
             self.gui_button_builder.set_color(self.screens_config['sub'][i]["Background"])

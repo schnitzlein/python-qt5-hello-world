@@ -14,6 +14,7 @@ class Countup(QWidget):
             self.font = QFont(font_name, 80, QFont.Bold)
         else:
             self.font = QFont("LCARSGTJ3", 80, QFont.Bold)
+
         self.foreground_color = foreground_color
         self.name = "Countup"
         self.symbol = QLabel(self.name)

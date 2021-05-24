@@ -16,64 +16,76 @@
   },
   "sub": [
     {
-      "name": "Clock",
+      "name": "Time",
       "Position": 1,
       "Background": "#ffba26",
-      "mode": ""
+      "layout": 1,
+      "subapp": [
+            {
+        "name": "Clock",
+        "Position": 1,
+        "Background": "#aabc50"
+      },
+      {
+        "name": "Timer",
+        "Position": 2,
+        "Background": "#c1ff05"
+      }
+      ]
     },
     {
       "name": "Countup",
       "Position": 2,
       "Background": "#c1ff05",
-      "mode": ""
+      "layout": 0
     },
     {
-      "name": "App3",
+      "name": "Movesub",
       "Position": 3,
       "Background": "#cc2d2d",
-      "mode": ""
+      "layout": 0
     },
     {
-      "name": "App4",
+      "name": "MyCustomEventTest",
       "Position": 4,
       "Background": "#309fff",
-      "mode": ""
+      "layout": 0
     },
     {
       "name": "App5",
       "Position": 5,
       "Background": "#c1ff05",
-      "mode": ""
+      "layout": 0
     },
     {
       "name": "App6",
       "Position": 6,
       "Background": "#ffba26",
-      "mode": ""
+      "layout": 0
     },
     {
       "name": "App7",
       "Position": 7,
       "Background": "#ffba26",
-      "mode": ""
+      "layout": 0
     },
     {
       "name": "App8",
       "Position": 8,
       "Background": "#ffba26",
-      "mode": ""
+      "layout": 0
     },
     {
       "name": "App9",
       "Position": 9,
       "Background": "#ffba26",
-      "mode": ""
+      "layout": 0
     },
     {
       "name": "App10",
       "Position": 10,
       "Background": "#ffba26",
-      "mode": ""
+      "layout": 0
     }
   ]
 }
