@@ -10,6 +10,7 @@ class GuiButtonBuilder:
         self.height = 0
         self.width = 0
         self.color = ""
+        self.style = ""
         self.gui_element_builder = GuiElementsBuilder()
 
     def set_size(self, height: int, width: int):
@@ -18,6 +19,9 @@ class GuiButtonBuilder:
 
     def set_color(self, color: str):
         self.color = color
+
+    def set_style(self, style: str):
+        self.style = style
 
     def create_button(self, name: str, typ: Gui_Element) -> QPushButton:
         button = QPushButton(name)
@@ -33,6 +37,7 @@ class GuiButtonBuilder:
                 name))
         button_layout.setContentsMargins(0, 0, 0, 0)
         button.setLayout(button_layout)
-        button.setStyleSheet("border:1px;")
+        #button.setStyleSheet("border:1px;")
+        button.setStyleSheet(self.style)
 
         return button

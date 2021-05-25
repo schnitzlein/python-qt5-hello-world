@@ -23,7 +23,6 @@ class GuiMenuBuilder(QWidget):
 
     def build_menu(self, config: dict, foreground_color) -> QLayout:
         self.foreground_color = foreground_color
-        print(config)
         if type(config) == list:
             self.button_counter = len(config)
 
@@ -36,7 +35,6 @@ class GuiMenuBuilder(QWidget):
             Qt.AlignTop)
         self.gui_button_builder.set_size(self.button_height, self.button_width)
         for i in range(0, self.button_counter):
-            print("counter: " + str(self.button_counter) + " " + str(i))
             self.gui_button_builder.set_color(config[i]["Background"])
             self.buttons.insert(i, self.gui_button_builder.create_button(config[i]["name"], Gui_Element.BUTTON_TEXT))
             self.vbox_menu.addWidget(self.buttons[i])

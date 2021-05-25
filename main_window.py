@@ -1,19 +1,14 @@
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QGridLayout, QHBoxLayout, QVBoxLayout, QListWidget, QListWidgetItem, QLayout
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QGridLayout, QVBoxLayout, QListWidget, QListWidgetItem, QLayout
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QWidget, QStackedWidget, QAbstractItemView
+from PyQt5.QtWidgets import QWidget, QStackedWidget
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 
 from gui import *
 from gui.gui_button_builder import GuiButtonBuilder
 from gui.gui_subscreen_builder import GuiSubscreenBuilder
-from subscreens.clock import Clock
-from subscreens.countup import Countup
-from subscreens.placeholder import Placeholder
-from subscreens.moveablesub import Movesub
-from experiments.myevent import MyCustomEventTest, MyEvent
 from PyQt5.QtCore import Qt, QRect
 
 
@@ -36,12 +31,6 @@ class MainWindow(QMainWindow):
         self.gui_subscreen_builder = GuiSubscreenBuilder()
         self.resolution = resolution
 
-    def set_central_widget2(self, widget: QWidget):
-        source_button = self.sender()
-        print("set_central_widget2 WidgetName:  " + widget.getName())
-        index = self.central_widget.widget(widget)
-        self.central_widget.setCurrentIndex(index)
-
     def set_central_widget(self):
         source_button = self.sender()
         for i in range(0, self.number_of_subs):
@@ -59,7 +48,7 @@ class MainWindow(QMainWindow):
         title = str(config['main']['name'])
         self.setWindowTitle(title)
         # Set window flag
-        flags = Qt.CustomizeWindowHint # Small Frame
+        flags = Qt.CustomizeWindowHint  # Small Frame
         # flags = Qt.FramelessWindowHint # No Frame
         self.setWindowFlags(flags)
         # Set Resolution ######################################################
@@ -91,7 +80,8 @@ class MainWindow(QMainWindow):
         vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.TOP_LEFT_SHORT, 100, 191, front_color))
         button_list_widget = QListWidget()
         vbox_menu.addWidget(button_list_widget)
-        vbox_menu.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT_SHORT, 100, 191, front_color))
+        vbox_menu.addWidget(
+            self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT_SHORT, 100, 191, front_color))
         # Header #################################################################
 
         self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 712, front_color),
@@ -114,7 +104,7 @@ class MainWindow(QMainWindow):
         exit_button.setFont(QFont(font, 20, QFont.Bold))
         exit_button.setFixedSize(52, 33)
         exit_button.setStyleSheet("background:#ff0000; border:1px solid " + front_color + ";")
-        exit_button.clicked.connect(lambda: self.close())
+        exit_button.clicked.connect(lambda state: self.close())
 
         self.main_layout.addWidget(exit_button, 3, 3, Qt.AlignBottom)
         self.main_layout.addWidget(
@@ -139,12 +129,14 @@ class MainWindow(QMainWindow):
             flag = placeholder_list_item.flags() & Qt.ItemIsUserCheckable
             placeholder_list_item.setFlags(flag)
             # Widgets ##################################################################################################
-            self.central_widget.insertWidget(i, self.gui_subscreen_builder.inti_with_config(self.screens_config['sub'][i]))
+            self.central_widget.insertWidget(i,
+                                             self.gui_subscreen_builder.inti_with_config(self.screens_config['sub'][i]))
 
             # Buttons ##################################################################################################
             self.gui_button_builder.set_color(self.screens_config['sub'][i]["Background"])
             self.gui_button_builder.set_size(button_height, button_width)
-            self.button[i] = self.gui_button_builder.create_button(self.screens_config["sub"][i]["name"], Gui_Element.BUTTON_TEXT)
+            self.button[i] = self.gui_button_builder.create_button(self.screens_config["sub"][i]["name"],
+                                                                   Gui_Element.BUTTON_TEXT)
 
             sub_button_list_item.setSizeHint(button_size)
             button_list_widget.addItem(placeholder_list_item)
@@ -153,8 +145,7 @@ class MainWindow(QMainWindow):
             # signals ##################################################################################################
             self.button[i].clicked.connect(lambda widget=self.central_widget.widget(i): self.set_central_widget())
 
-
-        #button_list_widget.setMaximumWidth(1000)
+        # button_list_widget.setMaximumWidth(1000)
         button_list_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         button_list_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         button_list_widget.setMaximumWidth(button_list_widget.sizeHintForColumn(0))

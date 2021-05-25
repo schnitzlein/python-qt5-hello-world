@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout
 from PyQt5.QtGui import QFont
 
+
 class Placeholder(QWidget):
 
     def __init__(self, name: str, foreground_color="#ffffff", font_name=""):

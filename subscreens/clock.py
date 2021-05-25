@@ -1,11 +1,11 @@
-import sys
 from PyQt5.QtCore import QTime, QTimer, QDate, Qt
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QHBoxLayout, QLayout
-from PyQt5.QtWidgets import QApplication, QWidget
-from gui import *
-from gui.gui_button_builder import GuiButtonBuilder
+from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtWidgets import QWidget
+from gui.gui_element_builder import GuiElementsBuilder
+from gui.gui_element import Gui_Element
+
 
 class Clock(QWidget):
 
@@ -30,7 +30,7 @@ class Clock(QWidget):
         self.lblDateTxt.setText(str(self.Date))
 
         self.checkThreadTimer = QTimer(self)
-        self.checkThreadTimer.setInterval(100) #.1 seconds
+        self.checkThreadTimer.setInterval(100)  # .1 seconds
         self.checkThreadTimer.timeout.connect(lambda: self.set_time())
         self.checkThreadTimer.start()
 
@@ -39,7 +39,7 @@ class Clock(QWidget):
         # Clock Hours Minutes
         self.main_layout.addWidget(self.lblTimeTxt, 0, 0, 1, 5, Qt.AlignHCenter)
         # Clock Seconds
-        #self.main_layout.addWidget(self.lblTimeSecTxt, 0, 3, Qt.AlignRight | Qt.AlignBottom)
+        # self.main_layout.addWidget(self.lblTimeSecTxt, 0, 3, Qt.AlignRight | Qt.AlignBottom)
 
         self.main_layout.addWidget(
             self.gui_element_builder.get_svg_widget(Gui_Element.END_LEFT, 20, 10, foreground_color),
@@ -58,7 +58,8 @@ class Clock(QWidget):
 
     def set_time(self):
         self.lblTimeTxt.setText(self.get_time().toString("hh:mm "))
-        #self.lblTimeSecTxt.setText(self.get_time().toString("ss"))
+        # self.lblTimeSecTxt.setText(self.get_time().toString("ss"))
+        self.Date = QDate.currentDate().toString("dd.MM.yyyy")
 
     @staticmethod
     def get_time() -> QTime:

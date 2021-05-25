@@ -13,4 +13,3 @@ if __name__ == '__main__':
     window.init_with_config(main_config_dict)
     window.show()
     app.exec()
-
