@@ -2,15 +2,17 @@ from PyQt5.QtCore import QTime, QTimer, QDate, Qt
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QWidget
+
 from gui.gui_element_builder import GuiElementsBuilder
 from gui.gui_element import Gui_Element
+from subscreens.baseclass import Base
+from util.eventhandler.observer import Observer
 
 
-class Clock(QWidget):
+class Clock(Base):
 
-    def __init__(self, foreground_color="#ffffff"):
-        super().__init__()
+    def __init__(self, observer: Observer, name, foreground_color="#ffffff"):
+        super().__init__(name, observer)
 
         self.name = "Clock"
         self.gui_element_builder = GuiElementsBuilder()

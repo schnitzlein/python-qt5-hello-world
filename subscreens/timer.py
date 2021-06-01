@@ -3,9 +3,13 @@ from gui.gui_button_builder import GuiButtonBuilder
 from gui.gui_element import Gui_Element
 from PyQt5.QtWidgets import QHBoxLayout, QGridLayout
 from PyQt5.QtWidgets import QWidget, QStackedWidget
-from PyQt5.QtCore import QTimer, QSize
+from PyQt5.QtCore import QTimer, QSize, Qt
+from PyQt5 import QtCore
 
 from subscreens.baseclass import Base
+from util.eventhandler.observer import Observer
+from util.eventhandler.alarm_observer import AlarmObserver
+from PyQt5.QtCore import pyqtSignal
 
 
 class TimerListItem(QListWidgetItem):
@@ -41,13 +45,14 @@ class TimerListItem(QListWidgetItem):
             return str(value)
 
 
-class TimerListWidget(QWidget):
+class TimerListWidget(Base):
 
-    def __init__(self, parent, item: TimerListItem, foreground_color="#ffffff"):
-        super().__init__()
+    def __init__(self, observer: Observer, name: str, foreground_color="#ffffff", parent=None, item: TimerListItem=None):
+        super().__init__(observer, name)
 
         self.parent = parent
         self.item = item
+        self.observer = observer
         self.foreground_color = foreground_color
         self.setStyleSheet("QLabel { color : " + self.foreground_color + "; font: 30pt;}")
         self.hbox_layout = QHBoxLayout()
@@ -75,6 +80,9 @@ class TimerListWidget(QWidget):
         self.hbox_layout.addWidget(self.delete_button)
 
         self.setLayout(self.hbox_layout)
+
+    def set_observer(self, observer: Observer):
+        self.observer = observer
 
     def remove_item(self):
         row = self.parent.row(self.item)
@@ -112,19 +120,22 @@ class TimerListWidget(QWidget):
 
     def count_down_end(self):
         self.count_down_timer.stop()
-        # ToDo Alert Signal to main_window
+        msg = {
+            "subscreen_name": "TimerOverview",
+            "msg": self.timer_name.text() + " expired"
+        }
+        self.observer.update_from_subscreen(msg)
 
 
 class Timer(Base):
 
-    def __init__(self, name: str, foreground_color="#ffffff", font_name=""):
+    def __init__(self, observer: Observer, name: str, foreground_color="#ffffff", font_name=""):
         super().__init__(name, foreground_color, font_name)
 
         self.main_layout = QGridLayout()
         self.central_widget = QStackedWidget()
-        self.timer_overview_widget = QWidget()
-        self.central_widget.insertWidget(0, TimerOverview(self, "TimerOverview", "#441456"))
-        self.central_widget.insertWidget(1, AddTimer(self, "AddTimer", "#ff1422"))
+        self.central_widget.insertWidget(0, TimerOverview(observer, "TimerOverview", self, foreground_color))
+        self.central_widget.insertWidget(1, AddTimer(observer, "AddTimer", self, foreground_color))
         self.central_widget.setCurrentIndex(0)
 
         self.main_layout.addWidget(self.central_widget)
@@ -140,9 +151,10 @@ class Timer(Base):
 
 
 class TimerOverview(Base):
-    def __init__(self, parent, name: str, foreground_color="#ffffff", font_name=""):
-        super().__init__(name, foreground_color, font_name)
+    def __init__(self, observer: Observer, name: str, parent, foreground_color="#ffffff", font_name=""):
+        super().__init__(observer, name)
         self.parent = parent
+        self.observer = observer
         self.foreground_color = foreground_color
         self.background_color = "#050505"
         self.gui_button_builder = GuiButtonBuilder()
@@ -166,7 +178,7 @@ class TimerOverview(Base):
     def add_timer(self, timer_config: dict):
         timer_item = TimerListItem(self.timer_list, timer_config)
         timer_item.setSizeHint(QSize(100, 50))
-        timer_widget_item = TimerListWidget(self.timer_list, timer_item, "#ff00ff")
+        timer_widget_item = TimerListWidget(self.observer, "",self.foreground_color, self.timer_list, timer_item)
         self.timer_list.addItem(timer_item)
         self.timer_list.setItemWidget(timer_item, timer_widget_item)
 
@@ -176,13 +188,14 @@ class TimerOverview(Base):
 
 class AddTimer(Base):
 
-    def __init__(self, parent, name: str, foreground_color="#ffffff", font_name=""):
-        super().__init__(name, foreground_color, font_name)
+    def __init__(self, observer: Observer, name: str, parent, foreground_color="#ffffff", font_name=""):
+        super().__init__(observer, name)
         self.parent = parent
         self.gui_button_builder = GuiButtonBuilder()
         self.timer_name = QLabel("Name:")
         self.timer_name_value = QLabel("Timer ")
         self.timer_counter = 0
+        self.timer_name_value.setText((self.timer_name_value.text()[:6]) + str(self.timer_counter))
         self.main_layout = QGridLayout()
         self.hbox_titel = QHBoxLayout()
         self.hbox_up = QHBoxLayout()
@@ -197,7 +210,8 @@ class AddTimer(Base):
         self.setStyleSheet("QLabel { color : " + self.foreground_color + "; font: 30pt;}")
 
         self.gui_button_builder.set_color(foreground_color)
-        self.gui_button_builder.set_size(30, 100)
+        self.gui_button_builder.set_size(50, 100)
+        # self.gui_button_builder.set_size(30, 100)
         self.gui_button_builder.set_style("font-size: 30pt;")
         self.button_up_h = self.gui_button_builder.create_button("h+", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
         self.button_down_h = self.gui_button_builder.create_button("h-", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
@@ -213,6 +227,7 @@ class AddTimer(Base):
         self.button_up_sec.clicked.connect(lambda state, lab=self.seconds: self.plus(lab, 59))
         self.button_down_sec.clicked.connect(lambda state, lab=self.seconds: self.minus(lab, 59))
 
+        self.gui_button_builder.set_size(50, 100)
         self.button_add_timer = self.gui_button_builder.create_button("Add", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
         self.button_add_timer.clicked.connect(lambda: self.add_timer())
         self.button_close = self.gui_button_builder.create_button("OK", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
@@ -225,11 +240,11 @@ class AddTimer(Base):
         self.hbox_titel.addStretch()
 
         self.hbox_up.addStretch()
-        self.hbox_up.addWidget(self.button_up_h)
+        self.hbox_up.addWidget(self.button_up_h, 0, Qt.AlignHCenter)
         self.hbox_up.addStretch()
-        self.hbox_up.addWidget(self.button_up_min)
+        self.hbox_up.addWidget(self.button_up_min, 0, Qt.AlignHCenter)
         self.hbox_up.addStretch()
-        self.hbox_up.addWidget(self.button_up_sec)
+        self.hbox_up.addWidget(self.button_up_sec, 0, Qt.AlignHCenter)
         self.hbox_up.addStretch()
 
         self.hbox_value.addStretch()
@@ -282,8 +297,8 @@ class AddTimer(Base):
                         "minute": "0",
                         "second": "0"}
 
-        self.timer_name_value.setText((self.timer_name_value.text()[:6]) + str(self.timer_counter))
         self.timer_counter = self.timer_counter + 1
+        self.timer_name_value.setText((self.timer_name_value.text()[:6]) + str(self.timer_counter))
         timer_config["name"] = self.timer_name_value.text()
         timer_config["hour"] = self.hour.text()
         timer_config["minute"] = self.minutes.text()

@@ -5,15 +5,16 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QWidget, QStackedWidget
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
-
+from abc import ABC
 from gui import *
 from gui.gui_button_builder import GuiButtonBuilder
 from gui.gui_subscreen_builder import GuiSubscreenBuilder
 from PyQt5.QtCore import Qt, QRect
+from util.eventhandler.alarm_observer import AlarmObserver
+from subscreens.alarm import Alarm
 
 
 class MainWindow(QMainWindow):
-
     def __init__(self, resolution: QRect, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
@@ -22,23 +23,37 @@ class MainWindow(QMainWindow):
         self.current_screen = 0
         self.sub_screens = {}
         self.button = {}
-        self.central_widget = QStackedWidget()
+        self.subscreen_stacked_widget = QStackedWidget()
         self.number_of_subs = 0
+        self.main_stack_widget = QStackedWidget()
         self.main_widget = QWidget()
         self.main_layout = QGridLayout()
         self.gui_element_builder = GuiElementsBuilder()
         self.gui_button_builder = GuiButtonBuilder()
         self.gui_subscreen_builder = GuiSubscreenBuilder()
         self.resolution = resolution
+        self.alarm_observer = AlarmObserver(self)
+        self.alarm_widget = Alarm(self.alarm_observer, "Alarm_Widget", "#550055", self)
 
-    def set_central_widget(self):
+    def set_current_subscreen(self):
         source_button = self.sender()
         for i in range(0, self.number_of_subs):
-            if self.central_widget.widget(i).get_name() == source_button.text():
-                self.central_widget.setCurrentIndex(i)
+            if self.subscreen_stacked_widget.widget(i).get_name() == source_button.text():
+                self.subscreen_stacked_widget.setCurrentIndex(i)
+
+    def toggle_main_widget(self, index: int):
+        # ToDo Anpassen an Stackwidget
+        max_value = self.main_stack_widget.count()
+        #index = self.main_stack_widget.currentIndex()
+        self.main_stack_widget.setCurrentIndex(index % max_value)
 
     def close_main_window(self):
         self.close()
+
+    def update_from_subscreen(self, msg: dict) -> None:
+        print(msg)
+        self.alarm_widget.set_alarm_text(msg)
+        self.toggle_main_widget(1)
 
     def init_with_config(self, config: dict):
         self.screens_config = config
@@ -51,6 +66,7 @@ class MainWindow(QMainWindow):
         flags = Qt.CustomizeWindowHint  # Small Frame
         # flags = Qt.FramelessWindowHint # No Frame
         self.setWindowFlags(flags)
+
         # Set Resolution ######################################################
         # via config
         window_width = config['main']["resolution"][0]
@@ -82,8 +98,8 @@ class MainWindow(QMainWindow):
         vbox_menu.addWidget(button_list_widget)
         vbox_menu.addWidget(
             self.gui_element_builder.get_svg_widget(Gui_Element.BOTTOM_LEFT_SHORT, 100, 191, front_color))
-        # Header #################################################################
 
+        # Header #################################################################
         self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 712, front_color),
                                    0, 1, 1, 1, Qt.AlignTop)
         self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 52, front_color),
@@ -95,7 +111,7 @@ class MainWindow(QMainWindow):
         # Menu
         self.main_layout.addLayout(vbox_menu, 0, 0, 4, 1)
         # Central Window
-        self.main_layout.addWidget(self.central_widget, 1, 1, 2, 4)
+        self.main_layout.addWidget(self.subscreen_stacked_widget, 1, 1, 2, 4)
         # Footer #################################################################
         self.main_layout.addWidget(self.gui_element_builder.get_svg_widget(Gui_Element.BUTTON, 33, 712, front_color),
                                    3, 1, Qt.AlignBottom)
@@ -129,8 +145,9 @@ class MainWindow(QMainWindow):
             flag = placeholder_list_item.flags() & Qt.ItemIsUserCheckable
             placeholder_list_item.setFlags(flag)
             # Widgets ##################################################################################################
-            self.central_widget.insertWidget(i,
-                                             self.gui_subscreen_builder.inti_with_config(self.screens_config['sub'][i]))
+            self.subscreen_stacked_widget.insertWidget(i,
+                                                       self.gui_subscreen_builder.inti_with_config(self.screens_config['sub'][i],
+                                                                                         self.alarm_observer))
 
             # Buttons ##################################################################################################
             self.gui_button_builder.set_color(self.screens_config['sub'][i]["Background"])
@@ -143,7 +160,7 @@ class MainWindow(QMainWindow):
             button_list_widget.addItem(sub_button_list_item)
             button_list_widget.setItemWidget(sub_button_list_item, self.button[i])
             # signals ##################################################################################################
-            self.button[i].clicked.connect(lambda widget=self.central_widget.widget(i): self.set_central_widget())
+            self.button[i].clicked.connect(lambda widget=self.subscreen_stacked_widget.widget(i): self.set_current_subscreen())
 
         # button_list_widget.setMaximumWidth(1000)
         button_list_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -151,5 +168,8 @@ class MainWindow(QMainWindow):
         button_list_widget.setMaximumWidth(button_list_widget.sizeHintForColumn(0))
 
         #############################################
-        self.central_widget.setCurrentIndex(0)
-        self.setCentralWidget(self.main_widget)
+        self.subscreen_stacked_widget.setCurrentIndex(0)
+        self.main_stack_widget.insertWidget(0, self.main_widget)
+        self.main_stack_widget.insertWidget(1, self.alarm_widget)
+        self.main_stack_widget.setCurrentIndex(0)
+        self.setCentralWidget(self.main_stack_widget)

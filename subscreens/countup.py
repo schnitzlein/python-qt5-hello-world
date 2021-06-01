@@ -36,12 +36,12 @@ class Countup(QWidget):
 
         layout=QGridLayout()
 
-        self.timer=QTimer()
+        self.timer = QTimer()
         self.timer.timeout.connect(self.showTime)
 
-        layout.addWidget(self.label,0,0,1,2)
-        layout.addWidget(self.startBtn,1,0)
-        layout.addWidget(self.endBtn,1,1)
+        layout.addWidget(self.label, 0, 0, 1, 2)
+        layout.addWidget(self.startBtn, 1, 0)
+        layout.addWidget(self.endBtn, 1, 1)
 
         self.startBtn.clicked.connect(self.startTimer)
         self.endBtn.clicked.connect(self.endTimer)
@@ -49,7 +49,7 @@ class Countup(QWidget):
         self.setLayout(layout)
 
     def showTime(self):
-        self.time=QDateTime.currentDateTime()
+        self.time.set = QDateTime.currentDateTime()
         # timeDisplay=self.time.toString('yyyy-MM-dd hh:mm:ss dddd')
         timeDisplay=self.time.toString('hh:mm:ss')
         self.label.setText(timeDisplay)

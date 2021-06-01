@@ -4,6 +4,7 @@ from subscreens.placeholder import Placeholder
 from subscreens.clock import Clock
 from subscreens.timer import Timer
 from subscreens.moveablesub import Movesub
+from subscreens.alarm import Alarm
 from experiments.myevent import MyCustomEventTest
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGridLayout
@@ -11,6 +12,7 @@ from PyQt5.QtWidgets import QWidget, QStackedWidget
 from gui.gui_menu_builder import GuiMenuBuilder
 from gui.gui_element import Gui_Element
 from .gui_element_builder import GuiElementsBuilder
+from util.eventhandler.observer import Observer
 
 
 class GuiSubscreenBuilder:
@@ -24,8 +26,8 @@ class GuiSubscreenBuilder:
         self.central_widget = QStackedWidget()
         self.buttons = []
 
-    def inti_with_config(self, config: dict) -> QWidget:
-        self.widget = Base(config["name"], config["Background"])
+    def inti_with_config(self, config: dict, observer: Observer) -> QWidget:
+        self.widget = Base(observer, config["name"], config["Background"])
         self.foreground_color = config["Background"]
         if config["layout"] == 1:
             # Header
@@ -52,7 +54,7 @@ class GuiSubscreenBuilder:
                 self.buttons = self.gui_menu_builder.get_button_list()
 
                 for i in range(0, len(config.get("subapp"))):
-                    widget = self.create_subapp(config.get("subapp")[i])
+                    widget = self.create_subapp(config.get("subapp")[i], observer)
                     button = self.buttons[i]
                     self.central_widget.insertWidget(i, widget)
                     button.clicked.connect(lambda state, wid=widget: self.central_widget.setCurrentWidget(wid))
@@ -60,22 +62,24 @@ class GuiSubscreenBuilder:
             self.widget.setLayout(self.main_layout)
             return self.widget
         else:
-            return self.create_subapp(config)
+            return self.create_subapp(config, observer)
 
     @staticmethod
-    def create_subapp(config: dict) -> QWidget:
+    def create_subapp(config: dict, observer: Observer) -> QWidget:
         name = config["name"]
         # ToDo besseren Weg zum Erstellen der Subapps suchen
         # ToDo Laden der Subscreens aus Verzeichniss je nach Nennung in Config
         if name == "Clock":
-            return Clock(config["Background"])
+            return Clock(observer, name, config["Background"])
         elif name == "Timer":
-            return Timer(name, config["Background"])
+            return Timer(observer, name, config["Background"])
         elif name == "Countup":
-            return Countup(name, config["Background"])
+            return Countup(observer, name, config["Background"])
         elif name == "Movesub":
-            return Movesub(name, config["Background"])
+            return Movesub(observer, name, config["Background"])
+        elif name == "Alarm":
+            return Alarm(observer, name, config["Background"], None)
         elif name == "MyCustomEventTest":
-            return MyCustomEventTest(name, config["Background"])
+            return MyCustomEventTest(observer, name, config["Background"])
         else:
             return Placeholder(name, config["Background"])
