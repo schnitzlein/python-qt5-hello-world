@@ -58,7 +58,6 @@ class MainWindow(QMainWindow):
     def init_with_config(self, config: dict):
         self.screens_config = config
 
-        # TODO: put in delegation or inheritance
         # Set Title
         title = str(config['main']['name'])
         self.setWindowTitle(title)
@@ -146,7 +145,7 @@ class MainWindow(QMainWindow):
             placeholder_list_item.setFlags(flag)
             # Widgets ##################################################################################################
             self.subscreen_stacked_widget.insertWidget(i,
-                                                       self.gui_subscreen_builder.inti_with_config(self.screens_config['sub'][i],
+                                                       self.gui_subscreen_builder.init_with_config(self.screens_config['sub'][i],
                                                                                          self.alarm_observer))
 
             # Buttons ##################################################################################################

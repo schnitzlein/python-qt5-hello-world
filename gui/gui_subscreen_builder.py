@@ -26,7 +26,7 @@ class GuiSubscreenBuilder:
         self.central_widget = QStackedWidget()
         self.buttons = []
 
-    def inti_with_config(self, config: dict, observer: Observer) -> QWidget:
+    def init_with_config(self, config: dict, observer: Observer) -> QWidget:
         self.widget = Base(observer, config["name"], config["Background"])
         self.foreground_color = config["Background"]
         if config["layout"] == 1:
