@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QWidget, QStackedWidget
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
-from abc import ABC
+
 from gui import *
 from gui.gui_button_builder import GuiButtonBuilder
 from gui.gui_subscreen_builder import GuiSubscreenBuilder
@@ -42,9 +42,7 @@ class MainWindow(QMainWindow):
                 self.subscreen_stacked_widget.setCurrentIndex(i)
 
     def toggle_main_widget(self, index: int):
-        # ToDo Anpassen an Stackwidget
         max_value = self.main_stack_widget.count()
-        #index = self.main_stack_widget.currentIndex()
         self.main_stack_widget.setCurrentIndex(index % max_value)
 
     def close_main_window(self):

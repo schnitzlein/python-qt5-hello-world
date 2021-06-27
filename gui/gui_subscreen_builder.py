@@ -5,7 +5,9 @@ from subscreens.clock import Clock
 from subscreens.timer import Timer
 from subscreens.moveablesub import Movesub
 from subscreens.alarm import Alarm
+from subscreens.openweather import Weather
 from experiments.myevent import MyCustomEventTest
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QWidget, QStackedWidget
@@ -73,13 +75,15 @@ class GuiSubscreenBuilder:
             return Clock(observer, name, config["Background"])
         elif name == "Timer":
             return Timer(observer, name, config["Background"])
+        elif name == "Rest":
+            return Weather(observer, name, config["Background"])
         elif name == "Countup":
-            return Countup(observer, name, config["Background"])
+            return Countup(name, config["Background"])
         elif name == "Movesub":
-            return Movesub(observer, name, config["Background"])
+            return Movesub(name, config["Background"])
         elif name == "Alarm":
             return Alarm(observer, name, config["Background"], None)
         elif name == "MyCustomEventTest":
-            return MyCustomEventTest(observer, name, config["Background"])
+            return MyCustomEventTest(name, config["Background"])
         else:
             return Placeholder(name, config["Background"])

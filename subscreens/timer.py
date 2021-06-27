@@ -72,6 +72,7 @@ class TimerListWidget(Base):
         self.delete_button = self.gui_button_builder.create_button("Delete", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
         self.delete_button.clicked.connect(lambda: self.remove_item())
         self.start_pause_button = self.gui_button_builder.create_button("Start", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
+
         self.start_pause_button.clicked.connect(lambda: self.start_button_pressed())
 
         self.hbox_layout.addWidget(self.timer_name)
@@ -96,6 +97,7 @@ class TimerListWidget(Base):
         if self.start_button_state:
             self.start_button_state = False
             self.start_pause_button.setText("Stop")
+            self.start_pause_button.setLayout()
             self.check_timer.stop()
             self.count_down_timer.stop()
         else:
@@ -178,7 +180,7 @@ class TimerOverview(Base):
     def add_timer(self, timer_config: dict):
         timer_item = TimerListItem(self.timer_list, timer_config)
         timer_item.setSizeHint(QSize(100, 50))
-        timer_widget_item = TimerListWidget(self.observer, "",self.foreground_color, self.timer_list, timer_item)
+        timer_widget_item = TimerListWidget(self.observer, "", self.foreground_color, self.timer_list, timer_item)
         self.timer_list.addItem(timer_item)
         self.timer_list.setItemWidget(timer_item, timer_widget_item)
 
