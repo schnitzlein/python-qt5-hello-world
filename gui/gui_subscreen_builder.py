@@ -75,8 +75,8 @@ class GuiSubscreenBuilder:
             return Clock(observer, name, config["Background"])
         elif name == "Timer":
             return Timer(observer, name, config["Background"])
-        elif name == "Rest":
-            return Weather(observer, name, config["Background"])
+        elif name == "Weather":
+            return Weather(observer, name, config["Background"], "LCARSGTJ3")
         elif name == "Countup":
             return Countup(name, config["Background"])
         elif name == "Movesub":

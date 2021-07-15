@@ -38,6 +38,7 @@ class MainWindow(QMainWindow):
     def set_current_subscreen(self):
         source_button = self.sender()
         for i in range(0, self.number_of_subs):
+            # print(source_button.text(), self.subscreen_stacked_widget.widget(i).get_name())
             if self.subscreen_stacked_widget.widget(i).get_name() == source_button.text():
                 self.subscreen_stacked_widget.setCurrentIndex(i)
 

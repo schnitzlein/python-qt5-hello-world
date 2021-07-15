@@ -121,12 +121,14 @@ class GuiElementsBuilder:
 
         svg_bytes = bytearray(svg, encoding='utf-8')
         svg_widget = QSvgWidget()
-        svg_widget.renderer().load(svg_bytes)
+        svg_widget.load(svg_bytes)
+        #svg_widget.renderer().load(svg_bytes)
         if height > 0 and width > 0:
             size = QSize(width, height)
             svg_widget.setFixedSize(size)
-        else:
-            svg_widget.setFixedSize(svg_widget.renderer().defaultSize())
+        #else:
+        #    svg_widget.setFixedSize(svg_widget.renderer().defaultSize())
+        #    svg_widget.setFixedSize(svg_w)
 
         return svg_widget
 

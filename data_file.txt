@@ -1,0 +1,44 @@
+{'code': 200, 
+	'data': {
+		'coord': {
+			'lon': 13.7383, 
+			'lat': 51.0509
+		}, 
+		'weather': [
+			{
+			 'id': 801, 
+			 'main': 'Clouds', 
+			 'description': 'Ein paar Wolken', 
+			 'icon': '02d'
+			}
+		], 
+		'base': 'stations', 
+		'main': {
+			'temp': 25.53, 
+			'feels_like': 25.52, 
+			'temp_min': 22.37, 
+			'temp_max': 26.66, 
+			'pressure': 1016, 
+			'humidity': 53
+		}, 
+		'visibility': 10000, 
+		'wind': {
+			'speed': 3.09, 
+			'deg': 0
+		}, 
+		'clouds': {
+			'all': 20
+		}, 
+		'dt': 1625996819, 
+		'sys': {
+			'type': 1, 
+			'id': 1261, 
+			'country': 'DE', 
+			'sunrise': 1625972591, 
+			'sunset': 1626031050
+		}, 
+	'timezone': 7200, 
+	'id': 2935022, 
+	'name': 'Dresden', 
+	'cod': 200}
+}
