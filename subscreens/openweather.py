@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QStackedWidget
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 from util.eventhandler.observer import Observer
-from util.rest.rest import Rest
+from util.rest.rest_special import RestSpecial
 from subscreens.baseclass import Base
 
 from subscreens.weather.setup_widget import SetupWidget
@@ -62,7 +62,7 @@ class Weather(Base):
 
         self.setLayout(self.main_layout)
 
-        self.r = Rest("http://api.openweathermap.org", "36dcf663b6964439a18574709e1d6eef")
+        self.r = RestSpecial()
         self.data = None
 
         self.left_button.clicked.connect(
@@ -100,8 +100,8 @@ class Weather(Base):
         if not language:
             language = "de" # en, fr, ... , https://openweathermap.org/current#multi
         
-        subpath = "/data/2.5/weather?q={}&units=metric&lang={}".format(city, language)
-        self.data = self.r.call_server(subpath=subpath)
+        call_parameter = { "city": city, "units": "metrics", "language": language, "key": "36dcf663b6964439a18574709e1d6eef"}
+        self.data = self.r.call_server_weather(call_parameter)
         if self.data['code'] == 200:
             return self.data['data']
         else:
