@@ -1,62 +1,56 @@
-import requests
 #import validators
-import json
+#from rest import Rest
 from util.rest.rest import Rest
 
 class RestSpecial():
-    url = None
     api_key = None
-    rest = None
+    rest_caller = None
 
-    def __init__(self, url: str, api_key: str):
-        if isinstance(url, str):
-            self.url = url
-        if isinstance(api_key, str):
-            self.api_key = api_key
-        rest = Rest()
+    def __init__(self):
+        self.rest_caller = Rest()
      
     # https://openweathermap.org/api/air-pollution
-    def call_server_pollution(self, path: str, call_params: dict) -> dict:
-        pass
-
-    def call_server_weather(self, path: str, call_params: dict) -> dict:
+    def call_server_pollution(self, call_params: dict) -> dict:
         """
-        params: call_params { "city": "", "units": "", "language": "", "key": "", }
+        params: call_params { "lat": "", "lon": "", "units": "", "language": "", "key": ""}
         """
-        print("complete call Path: {}".format(self.url + subpath))
-        resp = requests.get(self.url + subpath + "&appid={}".format(self.api_key))
-        # resp = requests.get(url=url, params=params) # more generic way...
-        if resp.status_code == 200:
-            try:
-                data = resp.json()    
-                #if data == {}:
-                #    logging.warning("Using old data from callServer()! Code != 200 error is: {}".format(resp.status_code))
-                #    return None
-                ret = { 'code': 200, 'data': data }
-                return ret
-            except Exception as e:
-                #logging.error("Something wrong with callServer: {}".format(e))
-                print("Something wrong with callServer: {}".format(e))
-        elif resp.status_code != 200:
-            print("Calling: '{}' went wrong with code: {}".format(self.url + subpath, resp.status_code))
-            ret = { 'code': resp.status_code, 'data': None }
-            return ret
+        data = None
+        lat = call_params['lat']
+        lon = call_params['lon']
+        units = call_params['units']
+        language = call_params['language']
+        key = call_params['key']
+        path = "http://api.openweathermap.org/data/2.5/air_pollution?lat={}&lon={}&units={}&lang={}&appid={}".format(lat, lon, units, language, key)
+        data = self.rest_caller.rest_call_get(path=path, headers={}, params={})
+        if data['code'] == 200:
+            print("Weather API Call was successful.")
         else:
-            print("something different happend.")
+            print("Weather API Call was not successful!")
+        return data
+
+    def call_server_weather(self, call_params: dict) -> dict:
+        """
+        params: call_params { "city": "", "units": "", "language": "", "key": ""}
+        """
+        data = None
+
+        # TODO: if data file exists and is older than ... 1h, 
+        # than do not call for new data, else call for data
+        
+        key = call_params['key']
+        city = call_params['city']
+        units = call_params['units']
+        language = call_params['language']
+        path = "http://api.openweathermap.org/data/2.5/weather?q={}&units={}&lang={}&appid={}".format(city, units, language, key)
+
+        data = self.rest_caller.rest_call_get(path=path, headers={}, params={})
+        if data['code'] == 200:
+            print("Weather API Call was successful.")
+        else:
+            print("Weather API Call was not successful!")
+        return data
         
 
 if __name__ == "__main__":
-    r = Rest("http://api.openweathermap.org", "36dcf663b6964439a18574709e1d6eef")
-    data = None
-    city = "Berlin"
-    language = "de" # en, fr, ... , https://openweathermap.org/current#multi
-    subpath = "/data/2.5/weather?q={}&units=metric&lang={}".format(city, language)
-    data = r.call_server(subpath=subpath)
-    if data['code'] == 200:
-       print(data['data'])
-    else:
-       print(None)
-
-
-
-  
+    rastEn = RestSpecial()
+    print(rastEn.call_server_weather({ "city": "berlin", "units": "metrics", "language": "de", "key": "36dcf663b6964439a18574709e1d6eef"}))

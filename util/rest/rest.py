@@ -1,6 +1,8 @@
-import requests
 #import validators
 import json
+
+import requests
+
 
 class Rest():
 
@@ -41,7 +43,7 @@ class Rest():
         else:
             print("something different happend.")
         
-
+"""
 if __name__ == "__main__":
     r = Rest()
     key = "36dcf663b6964439a18574709e1d6eef"
@@ -55,7 +57,4 @@ if __name__ == "__main__":
        print(data['data'])
     else:
        print(None)
-
-
-
-  
+"""
