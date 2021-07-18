@@ -73,7 +73,8 @@ class Weather(Base):
 
     def create_new_city(self, city_name: str, unit: UnitSystem):
         city_widget = CityWidget(city_name, unit, self.foreground_color, self.font_name)
-        data = _data #self.call_server(city=city_name, language="de") # ToDo Rest anbinden
+        #data = _data
+        data = self.call_server(city=city_name, language="de") # ToDo Rest anbinden
         #f = open("demofile.txt", "w")
         #f.write(str(self.call_server(city=city_name, language="de")))
         #f.close()
@@ -100,7 +101,8 @@ class Weather(Base):
         if not language:
             language = "de" # en, fr, ... , https://openweathermap.org/current#multi
         
-        call_parameter = { "city": city, "units": "metrics", "language": language, "key": "36dcf663b6964439a18574709e1d6eef"}
+        #TODO: write to file / read from file etc... and store calls and check if...
+        call_parameter = { "city": city, "units": "metric", "language": language, "key": "36dcf663b6964439a18574709e1d6eef"}
         self.data = self.r.call_server_weather(call_parameter)
         if self.data['code'] == 200:
             return self.data['data']
