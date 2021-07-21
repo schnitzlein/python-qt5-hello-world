@@ -3,10 +3,10 @@ from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel ,QLineEdit
 from PyQt5.QtGui import QPalette, QFont
 from PyQt5.QtCore import Qt
-from subscreens.weather.unitsystem import UnitSystem
+from subscreens.weather_pkg.unitsystem import UnitSystem
 from gui.gui_element import Gui_Element
 from gui.gui_button_builder import GuiButtonBuilder
 
@@ -15,6 +15,7 @@ class SetupWidget(QWidget):
     def __init__(self, parent, foreground_color="#ffffff", font_name=""):
         super(SetupWidget, self).__init__()
 
+        self.name = "Setup"
         self.parent = parent
         self.main_layout = QVBoxLayout()
 
@@ -25,13 +26,16 @@ class SetupWidget(QWidget):
         self.foreground_color = foreground_color
         self.label_style = "QLabel { color : " + self.foreground_color + "; }"
 
+        self.app_id_label = QLabel("AppID:")
+        self.app_id_value = QLineEdit()
+
         self.head_line = QHBoxLayout()
-        self.title = QLabel("Setup")
-        self.title.setFont(self.font)
-        self.title.setStyleSheet(self.label_style)
-        self.head_line.addStretch()
-        self.head_line.addWidget(self.title)
-        self.head_line.addStretch()
+        #self.title = QLabel("Setup")
+        #self.title.setFont(self.font)
+        #self.title.setStyleSheet(self.label_style)
+        #self.head_line.addStretch()
+        #self.head_line.addWidget(self.title)
+        #self.head_line.addStretch()
 
         self.city_line = QHBoxLayout()
         self.city_label = QLabel("Stadt")
@@ -72,7 +76,7 @@ class SetupWidget(QWidget):
         self.unit_line.addWidget(self.unit_combobox)
         self.unit_line.addStretch(1)
 
-        self.main_layout.addLayout(self.head_line)
+        #self.main_layout.addLayout(self.head_line)
         self.main_layout.addStretch()
         self.main_layout.addLayout(self.city_line)
         self.main_layout.addLayout(self.unit_line)
@@ -92,3 +96,14 @@ class SetupWidget(QWidget):
         combo_box.setStyleSheet("color: "+ self.foreground_color + ";"
                                 "background-color: black;"
                                 "selection-color: " + self.foreground_color + ";")
+
+    def get_name(self) -> str:
+        return self.name
+
+    def get_key(self) -> str:
+        # ToDo create QEditline to set Key
+        pass
+
+    def get_language(self) -> str:
+        # ToDo create QEditLine to set language
+        pass

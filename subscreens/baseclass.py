@@ -28,7 +28,6 @@ class Base(QWidget):
         }
         self.attach(observer)
 
-
     def get_name(self) -> str:
         return self.name
 

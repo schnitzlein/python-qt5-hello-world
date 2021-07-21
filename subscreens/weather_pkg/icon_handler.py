@@ -1,7 +1,7 @@
 
 
 def get_part_of_file_path() -> str:
-    return "./subscreens/weather/icons/"
+    return "./subscreens/weather_pkg/icons/"
 
 
 def get_icon_path(weather_code: int, daytime: str = "d") -> str:

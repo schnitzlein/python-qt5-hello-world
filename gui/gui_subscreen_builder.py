@@ -5,7 +5,7 @@ from subscreens.clock import Clock
 from subscreens.timer import Timer
 from subscreens.moveablesub import Movesub
 from subscreens.alarm import Alarm
-from subscreens.openweather import Weather
+from subscreens.weather import Weather
 from experiments.myevent import MyCustomEventTest
 
 from PyQt5.QtCore import Qt

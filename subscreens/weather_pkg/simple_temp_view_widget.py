@@ -4,16 +4,19 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QFont
+from PyQt5.QtCore import Qt
 
-from subscreens.weather.icon_handler import get_icon_path
+from subscreens.weather_pkg.icon_handler import get_icon_path
+from subscreens.weather_pkg.unitsystem import UnitSystem
 
 
-class SimpleTempView(QWidget):
-    def __init__(self, parent, foreground_color="#ffffff", font_name=""):
-        super(SimpleTempView, self).__init__()
+class SimpleTempViewWidget(QWidget):
+    def __init__(self, parent, units: UnitSystem = UnitSystem.metric, foreground_color="#ffffff", font_name=""):
+        super(SimpleTempViewWidget, self).__init__()
 
         self.parent = parent
-        self.main_layout = QVBoxLayout()
+        self.units = units
+        self.main_layout = QHBoxLayout()
         self.foreground_color = foreground_color
         self.label_style = "QLabel { color : " + self.foreground_color + "; }"
 
@@ -42,45 +45,53 @@ class SimpleTempView(QWidget):
 
         self.weather_icon = QLabel()
         self.weather_icon.setScaledContents(True)
-        self.weather_icon.setFixedSize(300, 300)
+        self.weather_icon.setFixedSize(160, 160)
         self.weather_icon_description = QLabel()
         self.weather_icon_description.setFont(self.font_extra_small)
         self.weather_icon_description.setStyleSheet(self.label_style)
 
-        self.current_temp_layout = QHBoxLayout()
-        self.current_temp_layout.addWidget(self.temp_label)
-        self.current_temp_layout.addWidget(self.temp_value)
+        self.temp_max_layout = QHBoxLayout()
+        self.temp_max_layout.addWidget(self.temp_max_label)
+        self.temp_max_layout.addSpacing(20)
+        self.temp_max_layout.addWidget(self.temp_max_value)
+        self.temp_max_layout.addStretch(1)
 
-        self.max_temp_layout = QHBoxLayout()
-        self.max_temp_layout.addWidget(self.temp_max_label)
-        self.max_temp_layout.addWidget(self.temp_max_value)
+        self.temp_min_layout = QHBoxLayout()
+        self.temp_min_layout.addWidget(self.temp_min_label)
+        self.temp_min_layout.addSpacing(20)
+        self.temp_min_layout.addWidget(self.temp_min_value)
+        self.temp_min_layout.addStretch(1)
 
-        self.min_temp_layout = QHBoxLayout()
-        self.min_temp_layout.addWidget(self.temp_min_label)
-        self.min_temp_layout.addWidget(self.temp_min_value)
-
-        self.temp_range_layout = QVBoxLayout()
-        self.temp_range_layout.addLayout(self.max_temp_layout)
-        self.temp_range_layout.addLayout(self.min_temp_layout)
+        self.temp_layout = QVBoxLayout()
+        self.temp_layout.addStretch(1)
+        self.temp_layout.addLayout(self.temp_max_layout)
+        self.temp_layout.addWidget(self.temp_value)
+        self.temp_layout.addLayout(self.temp_min_layout)
+        self.temp_layout.addStretch(2)
 
         self.weather_icon_layout = QVBoxLayout()
         self.weather_icon_layout.addWidget(self.weather_icon)
         self.weather_icon_layout.addWidget(self.weather_icon_description)
+        self.weather_icon_layout.addStretch(3)
 
-        self.second_line_layout = QHBoxLayout()
-        self.second_line_layout.addLayout(self.temp_range_layout)
-        self.second_line_layout.addLayout(self.weather_icon_layout)
-
-        self.main_layout.addLayout(self.current_temp_layout)
-        self.main_layout.addLayout(self.second_line_layout)
+        self.main_layout.addStretch(1)
+        self.main_layout.addLayout(self.temp_layout)
+        self.main_layout.addStretch(1)
+        self.main_layout.addLayout(self.weather_icon_layout)
+        self.main_layout.addStretch(1)
 
         self.setLayout(self.main_layout)
 
     def set_data(self, data: dict):
-        # ToDo Einstellung behandeln bzgl. Fahrenheit
-        self.temp_value.setText("{}°C".format(data['main']['temp']))
-        self.temp_max_value.setText("{}°C".format(data['main']['temp_max']))
-        self.temp_min_value.setText("{}°C".format(data['main']['temp_min']))
+        unit_text = ""
+        if self.units == UnitSystem.metric:
+            unit_text = "{}°C"
+        elif self.units == UnitSystem.imperial:
+            unit_text = "{}°F"
+
+        self.temp_value.setText(unit_text.format(data['main']['temp']))
+        self.temp_max_value.setText(unit_text.format(data['main']['temp_max']))
+        self.temp_min_value.setText(unit_text.format(data['main']['temp_min']))
 
         icon_path = get_icon_path(data['weather'][0]['id'])
         print(icon_path)
