@@ -14,6 +14,7 @@ class SimpleTempViewWidget(QWidget):
     def __init__(self, parent, units: UnitSystem = UnitSystem.metric, foreground_color="#ffffff", font_name=""):
         super(SimpleTempViewWidget, self).__init__()
 
+        self.name = "Temp"
         self.parent = parent
         self.units = units
         self.main_layout = QHBoxLayout()
@@ -97,3 +98,6 @@ class SimpleTempViewWidget(QWidget):
         print(icon_path)
         self.weather_icon.setPixmap(QPixmap(icon_path))
         self.weather_icon_description.setText(data['weather'][0]['description'])
+
+    def get_name(self) -> str:
+        return self.name

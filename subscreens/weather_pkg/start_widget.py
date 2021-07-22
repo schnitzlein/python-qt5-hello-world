@@ -21,6 +21,7 @@ class StartWidget(QWidget):
 
         self.font = QFont(font_name, 40, QFont.Bold)
         self.font_small = QFont(font_name, 20, QFont.Bold)
+        self.high_label_style = "QLabel { color : #ffba26; }"
         self.label_style = "QLabel { color : " + self.foreground_color + "; }"
         style = "QPushButton { background-color: " + self.foreground_color + "; border: 2px; border-radius: 20px; border-style: outset;}"
         self.line_style = "QLabel { background-color: " + self.foreground_color + "; border: 2px; border-radius: 4px;}"
@@ -33,11 +34,11 @@ class StartWidget(QWidget):
         self.main_line = QHBoxLayout()
 
         self.head_widget_name_backward = QLabel()
-        self.set_label_style(self.head_widget_name_backward, self.font_small)
+        self.set_label_style(self.head_widget_name_backward, self.font_small, self.label_style)
         self.head_widget_name_current = QLabel()
-        self.set_label_style(self.head_widget_name_current, self.font)
+        self.set_label_style(self.head_widget_name_current, self.font, self.high_label_style)
         self.head_widget_name_foreward = QLabel()
-        self.set_label_style(self.head_widget_name_foreward, self.font_small)
+        self.set_label_style(self.head_widget_name_foreward, self.font_small, self.label_style)
 
         self.line = QLabel()
         self.line.setStyleSheet(self.line_style)
@@ -104,6 +105,6 @@ class StartWidget(QWidget):
         current = self.view_stack.currentIndex()
         self.toggle_main_widget(current + 1)
 
-    def set_label_style(self, label: QLabel, font: QFont):
-        label.setStyleSheet(self.label_style)
+    def set_label_style(self, label: QLabel, font: QFont, style: str):
+        label.setStyleSheet(style)
         label.setFont(font)
