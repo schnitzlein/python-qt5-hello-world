@@ -3,8 +3,10 @@ from PyQt5.QtWidgets import QWidget, QStackedWidget
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QFont
+from PyQt5.QtCore import QTimer
+
 from subscreens.weather_pkg.simple_temp_view_widget import SimpleTempViewWidget
-from subscreens.weather_pkg.simple_wind_air_view_widget import SimpleWindAirViewWidget
+from subscreens.weather_pkg.simple_wind_view_widget import SimpleWindViewWidget
 from subscreens.weather_pkg.unitsystem import UnitSystem
 
 
@@ -19,7 +21,9 @@ class CityWidget(QWidget):
 
         self.label_style = "QLabel { color : " + self.foreground_color + "; }"
         self.high_label_style = "QLabel { color : #ffba26; }"
-        self.button_style = "QPushButton { background-color: " + self.foreground_color + "; border: 2px; border-radius: 20px; border-style: outset;}"
+        self.button_style = "QPushButton { background-color: " + self.foreground_color + "; border: 2px; " \
+                                                                                         "border-radius: 20px; " \
+                                                                                         "border-style: outset;}"
         self.line_style = "QLabel { background-color: " + self.foreground_color + "; border: 2px; border-radius: 4px;}"
 
         self.font = QFont(font_name, 30, QFont.Bold)
@@ -32,8 +36,8 @@ class CityWidget(QWidget):
 
         self.temp_view = SimpleTempViewWidget(self, units, self.foreground_color, self.font_name)
         self.view_stack.addWidget(self.temp_view)
-        self.wind_air_view = SimpleWindAirViewWidget(self, self.foreground_color, self.font_name)
-        self.view_stack.addWidget(self.wind_air_view)
+        self.wind_view = SimpleWindViewWidget(self, units, self.foreground_color, self.font_name)
+        self.view_stack.addWidget(self.wind_view)
 
         self.separator_line = QHBoxLayout()
         self.main_layout.addLayout(self.separator_line)
@@ -75,6 +79,12 @@ class CityWidget(QWidget):
 
         self.setLayout(self.main_layout)
         self.set_bottom_line()
+
+        # Timer
+        self.switch_timer = QTimer(self)
+        self.switch_timer.setInterval(10000)  # 10 seconds
+        self.switch_timer.timeout.connect(lambda: self.toggle_main_widget(+1))
+        self.switch_timer.start()
 
         self.left_button.clicked.connect(lambda state: self.toggle_main_widget(-1))
         self.right_button.clicked.connect(lambda state: self.toggle_main_widget(+1))
