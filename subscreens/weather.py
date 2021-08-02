@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import QVBoxLayout
 from gui.gui_element import Gui_Element
 from gui.gui_button_builder import GuiButtonBuilder
 
+from util.filehandler import FileHandler
+
 _data = {'coord': {'lon': 13.4105, 'lat': 52.5244}, 'weather': [{'id': 801, 'main': 'Clouds', 'description': 'Ein paar Wolken', 'icon': '02n'}], 'base': 'stations', 'main': {'temp': 21.17, 'feels_like': 21.46, 'temp_min': 18.88, 'temp_max': 22.84, 'pressure': 1006, 'humidity': 81}, 'visibility': 10000, 'wind': {'speed': 1.34, 'deg': 340, 'gust': 3.13}, 'clouds': {'all': 20}, 'dt': 1626382653, 'sys': {'type': 2, 'id': 2011538, 'country': 'DE', 'sunrise': 1626318094, 'sunset': 1626376960}, 'timezone': 7200, 'id': 2950159, 'name': 'Berlin', 'cod': 200}
 
 
@@ -36,6 +38,13 @@ class Weather(Base):
     def get_data(self, config: dict) -> dict:
         # ToDo Datenabfrage entweder neu oder gespeicherte Daten
         return _data
+        # TODO save data or load data
+    
+    def save_data(self):
+        pass
+
+    def load_data(self):
+        pass
 
     def showData(self):
         if self.data is not None:
