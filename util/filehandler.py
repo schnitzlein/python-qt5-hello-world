@@ -66,6 +66,7 @@ class FileHandler():
             print("File exists and is readable/writeable/deleteable.")
             return True
         else:
+            print("File access is not possible or access permissions missing! for File: {}".format(filename))
             return False
     
     def is_file_path(self, filename: str) -> bool:
@@ -74,12 +75,13 @@ class FileHandler():
             print("File exists.")
             return True
         else:
-            print("File: '{}' can not be found.")
+            print("File: '{}' can not be found.".format(filename))
             return False
 
     def is_file_writeable(self, filename: str) -> bool:
         PATH = filename
         if os.access(PATH, os.W_OK):
+            print("File is writeable.")
             return True
         else:
             print("File: '{}' is not writeable.".format(filename))
@@ -88,6 +90,7 @@ class FileHandler():
     def is_file_readable(self, filename: str) -> bool:
         PATH = filename
         if os.access(PATH, os.R_OK):
+            print("File is readable.")
             return True
         else:
             print("File: '{}' is not readable.".format(filename))

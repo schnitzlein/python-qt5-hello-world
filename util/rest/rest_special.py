@@ -50,11 +50,11 @@ class RestSpecial():
             print("Weather API Call was not successful!")
         return data
     
-    def save_data(self, data: dict, filename: str) -> None:
+    def save_data(self, data: dict, filename="test.json") -> None:
         self.f.write_jsonfile(filename="test.json", filedata=data)
         
 
-    def load_data(self, filename: str) -> dict:
+    def load_data(self, filename="test.json") -> dict:
         return self.f.read_jsonfile(filename="test.json")
     
     def get_data_age_str(self, filename: str) -> str:
@@ -65,10 +65,10 @@ class RestSpecial():
         last_mod_time = self.f.getLastModificationTime(filename)
         return last_mod_time
 
-    def dataTimeDiff(self, filename: str, timediff=3600) -> float:
+    def dataTimeDiff(self, filename: str, timediff=3600) -> int:
         date_obj = self.get_data_age(filename)
         diff = date_obj - datetime.now()
-        diff_in_hours = diff.total_seconds() / 3600
+        diff_in_hours = diff.total_seconds() // timediff
         return diff_in_hours
 
 if __name__ == "__main__":
