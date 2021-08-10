@@ -3,8 +3,14 @@ import json
 import os
 import time
 import datetime
+import logging.config
+import traceback
 
 class FileHandler():
+    def __init__(self):
+        logging.config.fileConfig('/logs/logging.ini', disable_existing_loggers=False)
+        self.logger = logging.getLogger(__name__)
+
     def read_jsonfile(self, filename: str) -> dict:
         PATH = filename
         config_dict = { 'error': "no config file with readable data." }
@@ -112,4 +118,4 @@ class FileHandler():
 if __name__ == "__main__":
     f = FileHandler()
     f.getLastModificationTime('foobar.txt')
-    f.write_jsonfile("ice.json", {"a":4, "b":17})
+    f.write_jsonfile("/data/ice.json", {"a":4, "b":17})

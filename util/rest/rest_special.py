@@ -26,9 +26,9 @@ class RestSpecial():
         path = "http://api.openweathermap.org/data/2.5/air_pollution?lat={}&lon={}&units={}&lang={}&appid={}".format(lat, lon, units, language, key)
         data = self.rest_caller.rest_call_get(path=path, headers={}, params={})
         if data['code'] == 200:
-            print("Weather API Call was successful.")
+            self.rest_caller.logger.info("Weather API Call was successful.")
         else:
-            print("Weather API Call was not successful!")
+            self.rest_caller.logger.info("Weather API Call was not successful!")
         return data
 
     def call_server_weather(self, call_params: dict) -> dict:
@@ -45,9 +45,9 @@ class RestSpecial():
 
         data = self.rest_caller.rest_call_get(path=path, headers={}, params={})
         if data['code'] == 200:
-            print("Weather API Call was successful.")
+            self.rest_caller.logger.info("Weather API Call was successful.")
         else:
-            print("Weather API Call was not successful!")
+            self.rest_caller.logger.info("Weather API Call was not successful!")
         return data
     
     def save_data(self, data: dict, filename="test.json") -> None:

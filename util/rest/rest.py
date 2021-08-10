@@ -1,13 +1,14 @@
 #import validators
 import json
-
 import requests
-
+import logging.config
+import traceback
 
 class Rest():
 
     def __init__(self):
-        pass
+        logging.config.fileConfig('/logs/logging.ini', disable_existing_loggers=False)
+        self.logger = logging.getLogger(__name__)
     
     def rest_call_get(self, path: str, headers:dict, params: dict) -> dict:
         payload = {'params': params}   
@@ -18,13 +19,15 @@ class Rest():
                 ret = { 'code': 200, 'data': data }
                 return ret
             except Exception as e:
-                print("Something went wrong within rest_call_get: {}".format(e))
+                self.logger.error("Something went wrong within rest_call_get: {}".format(e))
+            except:
+                self.logger.error("uncaught exception: %s," traceback.format_exc())    
         elif resp.status_code != 200:
-            print("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
+            self.logger.error("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
             ret = { 'code': resp.status_code, 'data': self.url }
             return ret
         else:
-            print("something different happend.")
+            self.logger.error("something really bad happend.")
     
     def rest_call_post(self, path: str, headers:dict, params: dict) -> dict:
         payload = {'params': params}
@@ -35,13 +38,15 @@ class Rest():
                 ret = { 'code': 200, 'data': data }
                 return ret
             except Exception as e:
-                print("Something went wrong within rest_call_post: {}".format(e))
+                self.logger.error("Something went wrong within rest_call_post: {}".format(e))
+            except:
+                self.logger.error("uncaught exception: %s," traceback.format_exc())   
         elif resp.status_code != 200:
-            print("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
+            self.logger.error("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
             ret = { 'code': resp.status_code, 'data': self.url }
             return ret
         else:
-            print("something different happend.")
+            self.logger.error("something really bad happend.")
         
 """
 if __name__ == "__main__":
