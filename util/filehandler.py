@@ -80,7 +80,7 @@ class FileHandler():
             logging.info("File exists.")
             return True
         else:
-            logging.error("File: '{}' can not be found.".format(filename))
+            logging.warn("File: '{}' can not be found.".format(filename))
             return False
 
     def is_file_writeable(self, filename: str) -> bool:

@@ -52,11 +52,11 @@ class RestSpecial():
         return data
     
     def save_data(self, data: dict, filename="./data/test.json") -> None:
-        self.f.write_jsonfile(filename="test.json", filedata=data)
+        self.f.write_jsonfile(filename=filename, filedata=data)
         
 
-    def load_data(self, filename="test.json") -> dict:
-        return self.f.read_jsonfile(filename="./data/test.json")
+    def load_data(self, filename="./data/test.json") -> dict:
+        return self.f.read_jsonfile(filename=filename)
     
     def get_data_age_str(self, filename: str) -> str:
         last_mod_time_str = self.f.getLastModificationTimeString(filename)

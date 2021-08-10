@@ -40,15 +40,16 @@ class Weather(Base):
         # ToDo Datenabfrage entweder neu oder gespeicherte Daten
         print("call server")
         self.call_server(city="Dresden", language="de")
+        self.save_data()
         return self.data
         # TODO save data or load data
     
     #TODO: write to file / read from file etc... and store calls and check if...
     def save_data(self):
-        pass
+        self.r.save_data(data=self.data, filename="./data/weather.json")
 
     def load_data(self):
-        pass
+        self.data = self.r.load_data(filename="./data/weather.json")
 
     def showData(self):
         if self.data is not None:
