@@ -90,6 +90,7 @@ class SimpleTempViewWidget(QWidget):
         elif self.units == UnitSystem.imperial:
             unit_text = "{}°F"
 
+        print(data)
         self.temp_value.setText(unit_text.format(data['main']['temp']))
         self.temp_max_value.setText(unit_text.format(data['main']['temp_max']))
         self.temp_min_value.setText(unit_text.format(data['main']['temp_min']))

@@ -8,24 +8,23 @@ import traceback
 
 class FileHandler():
     def __init__(self):
-        logging.config.fileConfig('/logs/logging.ini', disable_existing_loggers=False)
-        self.logger = logging.getLogger(__name__)
+        pass
 
     def read_jsonfile(self, filename: str) -> dict:
         PATH = filename
         config_dict = { 'error': "no config file with readable data." }
         if not self.is_file_readable(filename):
-            print("File not found in path: {}".format(PATH))
+            logging.error("File not found in path: {}".format(PATH))
         try:
             with open(PATH, "r") as json_file:
                 try:
                     config_dict = json.load(json_file)
                 except Exception as e:
-                    print("json error")
+                    logging.error("json error")
                 finally:
                     json_file.close()
         except (IOError, OSError) as e:
-            print("File: {} with error: {}".format(PATH,e))
+            logging.error("File: {} with error: {}".format(PATH,e))
         return config_dict
 
     def write_jsonfile(self, filename: str, filedata: dict) -> None:
@@ -36,13 +35,13 @@ class FileHandler():
             with open(PATH, "w") as json_file:
                 try:
                     json.dump(filedata, json_file)
-                    print("File: {} written.".format(PATH))
+                    logging.info("File: {} written.".format(PATH))
                 except Exception as e:
-                    print("json error")
+                    logging.error("json error")
                 finally:
                     json_file.close()
         except (IOError, OSError) as e:
-            print("File: {} with error: {}".format(PATH,e))
+            logging.error("File: {} with error: {}".format(PATH,e))
     
     def append_to_jsonfile(self, filename: str, filedata: dict, insert_into: str) -> None:
         """
@@ -69,37 +68,37 @@ class FileHandler():
     def is_file(self, filename: str) -> bool:
         PATH = filename
         if self.is_file_path(PATH) and self.is_file_writeable(PATH) and self.is_file_readable(PATH):
-            print("File exists and is readable/writeable/deleteable.")
+            logging.info("File exists and is readable/writeable/deleteable.")
             return True
         else:
-            print("File access is not possible or access permissions missing! for File: {}".format(filename))
+            logging.error("File access is not possible or access permissions missing! for File: {}".format(filename))
             return False
     
     def is_file_path(self, filename: str) -> bool:
         PATH = filename
         if os.path.isfile(PATH):
-            print("File exists.")
+            logging.info("File exists.")
             return True
         else:
-            print("File: '{}' can not be found.".format(filename))
+            logging.error("File: '{}' can not be found.".format(filename))
             return False
 
     def is_file_writeable(self, filename: str) -> bool:
         PATH = filename
         if os.access(PATH, os.W_OK):
-            print("File is writeable.")
+            logging.info("File is writeable.")
             return True
         else:
-            print("File: '{}' is not writeable.".format(filename))
+            logging.error("File: '{}' is not writeable.".format(filename))
             return False
     
     def is_file_readable(self, filename: str) -> bool:
         PATH = filename
         if os.access(PATH, os.R_OK):
-            print("File is readable.")
+            logging.info("File is readable.")
             return True
         else:
-            print("File: '{}' is not readable.".format(filename))
+            logging.error("File: '{}' is not readable.".format(filename))
             return False
 
     def getLastModificationTimeString(self, filename: str) -> str:

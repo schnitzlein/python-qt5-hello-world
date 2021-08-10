@@ -94,14 +94,14 @@ class SimpleWindViewWidget(QWidget):
 
     def set_data(self, data: dict):
         unit_text_dec = "{}°"
-        unit_text_speed = ""
+        unit_text_speed = "{}"
         if self.units == UnitSystem.metric:
-            unit_text_speed = "{}m/s"
+            gust_label = "m/s"
         elif self.units == UnitSystem.imperial:
-            unit_text_speed = "{}mph"
+            gust_label = "mph"
 
         self.set_windrose_direction(data['wind']['deg'])
         self.wind_direction_label.setText(unit_text_dec.format(data['wind']['deg']))
         self.speed_label.setText(unit_text_speed.format(data['wind']['speed']))
-        self.gust_label.setText(unit_text_speed.format(data['wind']['gust']))
+        self.gust_label.setText(gust_label)
         #data["wind"]["speed"]

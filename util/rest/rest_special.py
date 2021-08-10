@@ -3,6 +3,7 @@
 from util.rest.rest import Rest
 from util.filehandler import FileHandler
 from datetime import datetime
+import logging
 
 class RestSpecial():
     api_key = None
@@ -26,9 +27,9 @@ class RestSpecial():
         path = "http://api.openweathermap.org/data/2.5/air_pollution?lat={}&lon={}&units={}&lang={}&appid={}".format(lat, lon, units, language, key)
         data = self.rest_caller.rest_call_get(path=path, headers={}, params={})
         if data['code'] == 200:
-            self.rest_caller.logger.info("Weather API Call was successful.")
+            logging.info("Weather API Call was successful.")
         else:
-            self.rest_caller.logger.info("Weather API Call was not successful!")
+            logging.info("Weather API Call was not successful!")
         return data
 
     def call_server_weather(self, call_params: dict) -> dict:
@@ -45,17 +46,17 @@ class RestSpecial():
 
         data = self.rest_caller.rest_call_get(path=path, headers={}, params={})
         if data['code'] == 200:
-            self.rest_caller.logger.info("Weather API Call was successful.")
+            logging.info("Weather API Call was successful.")
         else:
-            self.rest_caller.logger.info("Weather API Call was not successful!")
+            logging.info("Weather API Call was not successful!")
         return data
     
-    def save_data(self, data: dict, filename="test.json") -> None:
+    def save_data(self, data: dict, filename="./data/test.json") -> None:
         self.f.write_jsonfile(filename="test.json", filedata=data)
         
 
     def load_data(self, filename="test.json") -> dict:
-        return self.f.read_jsonfile(filename="test.json")
+        return self.f.read_jsonfile(filename="./data/test.json")
     
     def get_data_age_str(self, filename: str) -> str:
         last_mod_time_str = self.f.getLastModificationTimeString(filename)
