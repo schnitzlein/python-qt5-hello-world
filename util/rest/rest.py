@@ -3,6 +3,7 @@ import json
 import requests
 import logging
 import traceback
+logger = logging.getLogger(__name__)
 
 class Rest():
 
@@ -18,15 +19,15 @@ class Rest():
                 ret = { 'code': 200, 'data': data }
                 return ret
             except Exception as e:
-                logging.error("Something went wrong within rest_call_get: {}".format(e))
+                logger.error("Something went wrong within rest_call_get: {}".format(e))
             except:
-                logging.error("uncaught exception: {},".format(traceback.format_exc()))    
+                logger.error("uncaught exception: {},".format(traceback.format_exc()))    
         elif resp.status_code != 200:
-            logging.error("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
+            logger.error("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
             ret = { 'code': resp.status_code, 'data': self.url }
             return ret
         else:
-            logging.error("something really bad happend.")
+            logger.error("something really bad happend.")
     
     def rest_call_post(self, path: str, headers:dict, params: dict) -> dict:
         payload = {'params': params}
@@ -37,15 +38,15 @@ class Rest():
                 ret = { 'code': 200, 'data': data }
                 return ret
             except Exception as e:
-                logging.error("Something went wrong within rest_call_post: {}".format(e))
+                logger.error("Something went wrong within rest_call_post: {}".format(e))
             except:
-                logging.error("uncaught exception: {},".format(traceback.format_exc()))   
+                logger.error("uncaught exception: {},".format(traceback.format_exc()))   
         elif resp.status_code != 200:
-            logging.error("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
+            logger.error("Calling: '{}' went wrong with code: {}".format(self.url, resp.status_code))
             ret = { 'code': resp.status_code, 'data': self.url }
             return ret
         else:
-            logging.error("something really bad happend.")
+            logger.error("something really bad happend.")
         
 """
 if __name__ == "__main__":
