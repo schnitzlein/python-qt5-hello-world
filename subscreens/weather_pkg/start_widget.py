@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QDateTime
 
 from subscreens.weather_pkg.setup_widget import SetupWidget
 from subscreens.weather_pkg.city_widget import CityWidget
@@ -18,6 +18,9 @@ class StartWidget(QWidget):
         self.foreground_color = foreground_color
         self.font_name = font_name
         self.parent = parent
+
+        self.key = ""
+        self.language = "de"
 
         self.font = QFont(font_name, 40, QFont.Bold)
         self.font_small = QFont(font_name, 20, QFont.Bold)
@@ -97,14 +100,58 @@ class StartWidget(QWidget):
 
     def create_new_city(self, city_name: str, unit: UnitSystem):
         city_widget = CityWidget(city_name, unit, self.foreground_color, self.font_name)
-        call_parameter = {"city": city_name, "units": unit, "language": "de",
-                          "key": "36dcf663b6964439a18574709e1d6eef"}
+        call_parameter = {"city": city_name,
+                          "units": unit,
+                          "language": self.language,
+                          "key": self.key}
         data = self.parent.get_data(call_parameter)
         city_widget.set_data(data)
         self.view_stack.addWidget(city_widget)
         current = self.view_stack.currentIndex()
         self.toggle_main_widget(current + 1)
 
+        local = QDateTime(QDateTime.currentDateTime())
+        print("UTC:", local.toTime_t())
+        self.save_config()
+
     def set_label_style(self, label: QLabel, font: QFont, style: str):
         label.setStyleSheet(style)
         label.setFont(font)
+
+    def update_data(self, config: dict) -> dict:
+        call_parameter = {"city": config["city"],
+                          "units": config["unit"],
+                          "language": self.language,
+                          "key": self.key}  # "key": "36dcf663b6964439a18574709e1d6eef"}
+        data = self.parent.get_data(call_parameter)
+
+    def set_key(self, key: str):
+        self.key = key
+
+    def set_language(self, language: str):
+        self.language = language
+
+    def save_city_config(self) -> list:
+        if self.view_stack.count() < 2:
+            return []
+        cities = []
+
+        for pos in range(1, self.view_stack.count()):
+            city = {
+                "name": "",
+                "last_update": "",
+                "unit_system": ""
+            }
+
+            widget = self.view_stack.widget(pos)
+            city["unit_system"] = str(widget.get_units())
+            city["name"] = widget.get_name()
+            cities.append(city)
+
+        return cities
+
+    def save_config(self):
+        config = {"language": self.language,
+                  "key": self.key,
+                  "cities": self.save_city_config()}
+        self.parent.save_config(config)

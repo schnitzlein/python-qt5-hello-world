@@ -1,15 +1,19 @@
-from PyQt5.QtWidgets import QLabel, QListWidget, QListWidgetItem
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QListWidget
+from PyQt5.QtWidgets import QListWidgetItem
+from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtWidgets import QStackedWidget
+
+from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QSize
+from PyQt5.QtCore import Qt
+
 from gui.gui_button_builder import GuiButtonBuilder
 from gui.gui_element import Gui_Element
-from PyQt5.QtWidgets import QHBoxLayout, QGridLayout
-from PyQt5.QtWidgets import QWidget, QStackedWidget
-from PyQt5.QtCore import QTimer, QSize, Qt
-from PyQt5 import QtCore
 
 from subscreens.baseclass import Base
 from util.eventhandler.observer import Observer
-from util.eventhandler.alarm_observer import AlarmObserver
-from PyQt5.QtCore import pyqtSignal
 
 
 class TimerListItem(QListWidgetItem):
@@ -213,8 +217,8 @@ class AddTimer(Base):
 
         self.gui_button_builder.set_color(foreground_color)
         self.gui_button_builder.set_size(50, 100)
-        # self.gui_button_builder.set_size(30, 100)
         self.gui_button_builder.set_style("font-size: 30pt;")
+
         self.button_up_h = self.gui_button_builder.create_button("h+", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
         self.button_down_h = self.gui_button_builder.create_button("h-", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)
         self.button_up_min = self.gui_button_builder.create_button("min+", Gui_Element.BUTTON_FULL_CIRCLE_TEXT)

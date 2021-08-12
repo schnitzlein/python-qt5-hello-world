@@ -1,4 +1,5 @@
-from .weather_pkg.start_widget import StartWidget
+from subscreens.weather_pkg.start_widget import StartWidget
+from subscreens.weather_pkg.unitsystem import UnitSystem
 from util.eventhandler.observer import Observer
 from util.rest.rest_special import RestSpecial
 from subscreens.baseclass import Base
@@ -31,12 +32,31 @@ class Weather(Base):
 
         self.r = RestSpecial()
         self.data = None
-        self.f = FileHandler()
+        self.file_handler = FileHandler()
+
+        self.time_periode = 3600
+        self.load_start_config()
 
     def load_start_config(self):
-        # TODO: Laden von Konfigurierten Städten aus "weather_app_config.json"
-        # self.start_widget.create_new_city()
-        pass
+        config =  self.r.load_data("./subscreens/weather_pkg/weather_app_config.json")
+        print("load_start_conifg", config)
+        if config.get("error") is None:
+            self.time_periode = float(config["time_periode"])
+            key = config["key"]
+            language = config["language"]
+            self.start_widget.set_key(key)
+            self.start_widget.set_language(language)
+            cities = config["cities"]
+            for city in cities:
+
+                if city["name"]:
+                    self.start_widget.create_new_city(city["name"], UnitSystem[city["unit_system"]])
+        else:
+            log.error("error: weather_app_config.json not loaded")
+
+    def save_config(self, config: dict):
+        config["time_periode"] = self.time_periode
+        self.r.save_data(config, "./subscreens/weather_pkg/weather_app_config.json")
 
     def get_data(self, config: dict) -> dict:
         # TODO: read from config dictionary call param data
@@ -44,15 +64,15 @@ class Weather(Base):
         filepath_str = "./data/weather_{}.json".format(city)
 
         # check time age
-        log.debug( "Last time file was modified: {}".format(self.r.get_data_age_str(filepath_str)) )
-        log.debug( "Diff in hours: {}h".format(self.r.dataTimeDiff(filepath_str)))
-        if self.r.dataTimeDiff(filepath_str) >= 1 or not self.f.is_file(filepath_str):
+        log.debug("Last time file was modified: {}".format(self.r.get_data_age_str(filepath_str)) )
+        log.debug("Diff in hours: {}h".format(self.r.dataTimeDiff(filepath_str)))
+        if self.r.dataTimeDiff(filepath_str, self.time_periode) >= 1 or not self.file_handler.is_file(filepath_str):
             log.info("call server")
             self.call_server(city=city, language="de")
             self.save_data(filepath=filepath_str)
         # keep old Data
         # TODO: create a toggle/switch/config param for this threshold calling server for new data or not
-        elif self.r.dataTimeDiff(filepath_str) < 1:
+        elif self.r.dataTimeDiff(filepath_str, self.time_periode) < 1:
             self.load_data(filepath=filepath_str)
         return self.data
     

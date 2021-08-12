@@ -92,8 +92,8 @@ class CityWidget(QWidget):
     def set_units(self, units: UnitSystem):
         self.units = units
 
-    def units(self) -> UnitSystem:
-        return self.units
+    def get_units(self) -> UnitSystem:
+        return self.units.name
 
     def switch_view(self, index: int = 0):
         max_value = self.self.view_stack.count()
